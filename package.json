@@ -1,0 +1,72 @@
+{
+  "name": "@topfeed/topfeed",
+  "description": "topfeed",
+  "version": "0.0.1",
+  "main": "dist/cjs",
+  "module": "dist/esm/topfeed.js",
+  "browser": "dist/umd/topfeed.js",
+  "types": "src/typings.d.ts",
+  "files": [
+    "scripts",
+    "dist",
+    "src/typings.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TopFeed/topfeed.git"
+  },
+  "keywords": [
+    "react",
+    "koa",
+    "ssr"
+  ],
+  "author": "hardfist",
+  "bugs": {
+    "url": "https://github.com/TopFeed/topfeed/issues"
+  },
+  "homepage": "https://github.com/TopFeed/topfeed#readme",
+  "scripts": {
+    "clean:dist": "rimraf dist",
+    "clean:build": "rimraf build",
+    "clean": "npm run clean:dist && npm run clean:build",
+    "build": "npm run clean && tsc &&  rollup -c",
+    "build:all": "bash ./scripts/build.sh",
+    "tsc": "tsc",
+    "dev": "tsc --watch src",
+    "postinstall": "node ./scripts/post_install.js",
+    "test": "jest",
+    "lint": "eslint . --cache --fix",
+    "size": "bundlesize",
+    "pretest": "npm run lint && tsc --noEmit",
+    "precommit": "lint-staged",
+    "format": "prettier --write '**/*.{js,css,md}'",
+    "posttest": "npm run format"
+  },
+  "devDependencies": {
+    "bundlesize": "^0.17.0",
+    "eslint": "^5.2.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.14.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.62.0",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-typescript2": "^0.15.0",
+    "rollup-plugin-uglify": "^3.0.0",
+    "typescript": "^3.0.1",
+    "uglify-es": "^3.3.9"
+  },
+  "license": "MIT",
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{js,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
