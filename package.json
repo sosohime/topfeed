@@ -68,5 +68,8 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "dependencies": {
+    "koa": "^2.5.2"
   }
 }
