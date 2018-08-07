@@ -4,6 +4,10 @@ export as namespace topfeed;
 type PlainObject<T = any> = { [key: string]: T };
 type Middleware = (context: Context, next: () => Promise<any>) => any;
 
+export class Core extends KoaApplication {
+	config: Config;
+	use(middleware: any): this;
+}
 export class BaseContextClass {
 	ctx: Context;
 	app: Application;
