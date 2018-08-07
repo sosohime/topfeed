@@ -1,3 +1,1 @@
-export default (name: string) => {
-	console.log('hello world:', name);
-}
+export * from "./core";
