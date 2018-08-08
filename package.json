@@ -1,7 +1,7 @@
 {
   "name": "@topfeed/topfeed",
   "description": "topfeed",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "lib",
   "module": "src",
   "types": "src/typings.d.ts",
