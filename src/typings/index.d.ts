@@ -1,4 +1,6 @@
 import * as KoaApplication from "koa";
+import * as Topfeed from "../core";
+import * as Middleware from "../middleware";
 export as namespace topfeed;
 
 type PlainObject<T = any> = { [key: string]: T };
@@ -14,7 +16,7 @@ export class BaseContextClass {
 }
 export interface Context extends KoaApplication.Context {
 	[key: string]: any;
-	service: IService;
+	service: Service;
 	app: Application;
 }
 export interface Application extends KoaApplication {
@@ -24,9 +26,13 @@ export interface Application extends KoaApplication {
 export interface Config {
 	[key: string]: any;
 }
-export interface IService extends PlainObject {}
+export class Service extends Topfeed.Service {
+	[key: string]: any;
+}
 
-export interface IController extends PlainObject {}
+export class Controller extends Topfeed.Controller {
+	[key: string]: any;
+}
 
 export interface IMiddleware extends PlainObject {}
 export interface IHelper extends PlainObject {}

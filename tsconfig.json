@@ -1,23 +1,17 @@
 {
-  "compilerOptions": {
-      "outDir": "./lib",
-      "allowJs": true,
-      "sourceMap": true,
-      "module": "commonjs",
-      "target": "es2015",
-      "lib": ["es2017", "dom"],
-      "moduleResolution": "node",
-      "allowSyntheticDefaultImports": true,
-      "forceConsistentCasingInFileNames": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": false,
-      "noImplicitAny": true,
-      "strictNullChecks": true,
-      "suppressImplicitAnyIndexErrors": true,
-      "noUnusedLocals": true
-  },
-  "files": [
-    "src/typings.d.ts",
-    "src/index.ts"
-  ]
+	"compilerOptions": {
+		"outDir": "./lib",
+		"sourceMap": true,
+		"module": "commonjs",
+		"target": "es2015",
+    "lib": ["es2017", "dom"],
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"noUnusedLocals": true
+	},
+	"files": ["src/typings/index.d.ts", "src/typings/module.d.ts"],
+	"include": ["src/**/*"]
 }

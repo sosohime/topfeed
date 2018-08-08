@@ -3,6 +3,8 @@ import Loader from "./loader";
 import Service from "./base/service";
 import Controller from "./base/controller";
 class Core extends Koa {
+	static Controller: typeof Controller = Controller;
+	static Service: typeof Service = Service;
 	loader: Loader;
 	root: string;
 	config: any;

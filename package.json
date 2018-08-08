@@ -4,11 +4,11 @@
   "version": "0.0.2",
   "main": "lib",
   "module": "src",
-  "types": "src/typings.d.ts",
+  "types": "src/typings",
   "files": [
     "scripts",
     "dist",
-    "src/typings.d.ts"
+    "src/typings"
   ],
   "repository": {
     "type": "git",
@@ -28,8 +28,8 @@
     "clean": "rimraf lib",
     "build": "npm run clean && tsc",
     "build:all": "bash ./scripts/build.sh",
-    "tsc": "tsc",
-    "dev": "tsc --watch src",
+    "tsc": "tsc ",
+    "dev": "tsc --watch",
     "postinstall": "node ./scripts/post_install.js",
     "test": "jest",
     "lint": "eslint . --cache --fix",
@@ -66,6 +66,7 @@
     ]
   },
   "dependencies": {
-    "koa": "^2.5.2"
+    "koa": "^2.5.2",
+    "rndm": "^1.2.0"
   }
 }
