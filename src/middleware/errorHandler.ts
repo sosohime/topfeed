@@ -1,4 +1,4 @@
-import { Context } from "../typings";
+import { Context } from "../core";
 
 export default () => async (ctx: Context, next: any) => {
 	try {
@@ -8,9 +8,6 @@ export default () => async (ctx: Context, next: any) => {
 			ctx.throw(404);
 		}
 	} catch (err) {
-		if (ctx.verbose) {
-			console.error(err);
-		}
 		ctx.response.status = err.statusCode || err.status || 500;
 		ctx.app.emit("error", err, ctx);
 		if (ctx.status === 404) {

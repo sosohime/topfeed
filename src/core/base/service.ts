@@ -1,9 +1,9 @@
-import { Context, Application } from "../../typings";
-
+import { Context, Core } from "../../core";
 class Service {
-	constructor(public ctx: Context, public app: Application) {
+	app: Core;
+	constructor(public ctx: Context) {
 		this.ctx = ctx;
-		this.app = app;
+		this.app = ctx.app;
 	}
 }
 export default Service;

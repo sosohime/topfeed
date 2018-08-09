@@ -1,14 +1,14 @@
 import * as path from "path";
-import { Application } from "../../typings";
+import { Core } from "../../core";
 const CACHE = Symbol("cache");
 class Loader {
-	constructor(public app: Application) {
+	constructor(public app: Core) {
 		this.app = app;
 	}
 	load() {
 		this.loadService();
 	}
-	loadToContext(targets: any[], app: Application, property: string) {
+	loadToContext(targets: any[], app: Core, property: string) {
 		// 挂载到context下
 		Object.defineProperty(app.context, property, {
 			get() {

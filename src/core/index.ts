@@ -2,6 +2,14 @@ import * as Koa from "koa";
 import Loader from "./loader";
 import Service from "./base/service";
 import Controller from "./base/controller";
+interface Context extends Koa.Context {
+	app: Core;
+	locale: string;
+	messages: {
+		[key: string]: string;
+	};
+	render: (tpl: string, config?: any) => Promise<any>;
+}
 class Core extends Koa {
 	static Controller: typeof Controller = Controller;
 	static Service: typeof Service = Service;
@@ -20,4 +28,4 @@ class Core extends Koa {
 	}
 }
 
-export { Core, Service, Controller };
+export { Core, Service, Controller, Context };
