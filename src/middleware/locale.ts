@@ -1,9 +1,9 @@
-import { Context } from "../core";
+import { Context } from "../typings";
 export interface LocaleConfig {
-	defaultLocale: string;
-	allowLangs: string[];
-	cookieField: string;
-	messages: {
+	defaultLocale?: string;
+	allowLangs?: string[];
+	cookieField?: string;
+	messages?: {
 		[locale: string]: {
 			[key: string]: string;
 		};
@@ -14,7 +14,7 @@ export default (config: LocaleConfig) => async (ctx: Context, next: any) => {
 		defaultLocale = "en",
 		allowLangs = ["en", "zh"],
 		cookieField = "locale",
-		messages
+		messages = {}
 	} = config;
 	let locale = ctx.cookies.get(cookieField); // 优先获取cookie里locale设置
 	// 最后从accept-header header里获取locale信息

@@ -1,4 +1,5 @@
-import { Core, Context } from "../../core";
+import { Core } from "../../core";
+import { Context } from "../../typings";
 export default class Controller {
 	app: Core;
 	constructor(public ctx: Context) {

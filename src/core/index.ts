@@ -2,20 +2,17 @@ import * as Koa from "koa";
 import Loader from "./loader";
 import Service from "./base/service";
 import Controller from "./base/controller";
-export interface Context extends Koa.Context {
-	app: Core;
-	locale: string;
-	messages: {
-		[key: string]: string;
-	};
-	render: (tpl: string, config?: any) => Promise<any>;
-}
+import { Context } from "../typings";
+import * as compose from "koa-compose";
+
 class Core extends Koa {
 	static Controller: typeof Controller = Controller;
 	static Service: typeof Service = Service;
 	loader: Loader;
 	root: string;
 	config: any;
+	// @ts-ignore
+	use(middleware: compose.Middleware<Context>): this;
 	constructor() {
 		super();
 		this.root = process.cwd();
@@ -28,4 +25,4 @@ class Core extends Koa {
 	}
 }
 
-export { Core, Service, Controller };
+export { Core, Controller, Service };
