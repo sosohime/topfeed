@@ -1,7 +1,7 @@
 {
   "name": "@topfeed/topfeed",
   "description": "topfeed",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -24,9 +24,9 @@
   },
   "homepage": "https://github.com/TopFeed/topfeed#readme",
   "scripts": {
-    "clean": "rimraf lib",
-    "build": "npm run clean && tsc",
-    "build:typings": "",
+    "clean": "rimraf dist && rimraf lib",
+    "build": "npm run clean && npm run build:typings && tsc",
+    "build:typings": "tsc && node ./typing",
     "build:all": "bash ./scripts/build.sh",
     "tsc": "tsc ",
     "dev": "tsc --watch",

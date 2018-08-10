@@ -2,7 +2,7 @@ import * as Koa from "koa";
 import Loader from "./loader";
 import Service from "./base/service";
 import Controller from "./base/controller";
-interface Context extends Koa.Context {
+export interface Context extends Koa.Context {
 	app: Core;
 	locale: string;
 	messages: {
@@ -28,4 +28,4 @@ class Core extends Koa {
 	}
 }
 
-export { Core, Service, Controller, Context };
+export { Core, Service, Controller };
