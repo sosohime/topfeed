@@ -1,4 +1,4 @@
-import { Context } from "../typings";
+import { Context } from "../types";
 
 export default () => async (ctx: Context, next: any) => {
 	try {

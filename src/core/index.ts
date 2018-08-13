@@ -2,7 +2,7 @@ import * as Koa from "koa";
 import Loader from "./loader";
 import Service from "./base/service";
 import Controller from "./base/controller";
-import { Context } from "../typings";
+import { Context } from "../types";
 import * as compose from "koa-compose";
 
 class Core extends Koa {

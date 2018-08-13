@@ -1,3 +1,3 @@
 export * from "./core";
 export * from "./middleware";
-export * from "./typings";
+export * from "./types";

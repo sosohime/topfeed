@@ -1,5 +1,5 @@
 import { Core } from "../../core";
-import { Context } from "../../typings";
+import { Context } from "../../types";
 class Service {
 	app: Core;
 	constructor(public ctx: Context) {
