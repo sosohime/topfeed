@@ -2,9 +2,7 @@ import * as Koa from "koa";
 import Loader from "./loader";
 import Service from "./base/service";
 import Controller from "./base/controller";
-import { Context } from "../types";
-import * as compose from "koa-compose";
-
+import { Middleware } from "../types";
 class Core extends Koa {
 	static Controller: typeof Controller = Controller;
 	static Service: typeof Service = Service;
@@ -12,7 +10,7 @@ class Core extends Koa {
 	root: string;
 	config: any;
 	// @ts-ignore
-	use(middleware: compose.Middleware<Context>): this;
+	use(middleware: Middleware): this;
 	constructor() {
 		super();
 		this.root = process.cwd();
