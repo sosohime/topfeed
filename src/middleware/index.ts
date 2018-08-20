@@ -3,3 +3,4 @@ export { default as csrf } from "./csrf";
 export { default as errorHandle } from "./errorHandler";
 export { default as locale } from "./locale";
 export { default as logger } from "./logger";
+export { default as nunjuck_view } from "./view";

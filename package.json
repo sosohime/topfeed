@@ -69,7 +69,9 @@
   },
   "dependencies": {
     "@types/koa-router": "^7.0.31",
+    "js-stringify": "^1.0.2",
     "koa": "^2.5.2",
+    "koa-nunjucks-2": "^3.0.2",
     "koa-router": "^7.4.0",
     "rndm": "^1.2.0"
   }
