@@ -7,7 +7,8 @@
   "files": [
     "scripts",
     "dist",
-    "middleware.js"
+    "middleware.js",
+    "babel.js"
   ],
   "repository": {
     "type": "git",
@@ -38,9 +39,23 @@
     "precommit": "lint-staged",
     "format": "prettier --write '**/*.{js,css,md}'",
     "posttest": "npm run format",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "docs:dev":"vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/node": "^7.0.0-beta.51",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.51",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.51",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
+    "@babel/polyfill": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/preset-react": "^7.0.0-beta.51",
+    "@babel/preset-stage-0": "^7.0.0-beta.51",
+    "@babel/preset-typescript": "^7.0.0-beta.51",
+    "@babel/register": "^7.0.0-beta.51",
     "@types/koa": "^2.0.46",
     "bundlesize": "^0.17.0",
     "dts-bundle": "^0.7.3",
@@ -58,7 +73,8 @@
     "rollup-plugin-typescript2": "^0.15.0",
     "rollup-plugin-uglify": "^3.0.0",
     "typescript": "^3.0.1",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.9",
+    "vuepress": "^0.14.2"
   },
   "license": "MIT",
   "lint-staged": {

@@ -1,10 +1,10 @@
-import koaNunjucks from "koa-nunjucks-2";
-import stringify from "js-stringify";
+import * as koaNunjucks from "koa-nunjucks-2";
+import * as stringify from "js-stringify";
 import { Context } from "../types";
-export default (config: { manifest: string; path: string }) => async (
-	ctx: Context,
-	next: any
-) => {
+export default (config: {
+	manifest: { [key: string]: string };
+	path: string;
+}) => async (ctx: Context, next: any) => {
 	const { manifest, path } = config;
 	const middleware = koaNunjucks({
 		ext: "njk",
