@@ -41,7 +41,8 @@
     "posttest": "npm run format",
     "prepublishOnly": "npm run build",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "deploy": "bash ./deploy.sh"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",

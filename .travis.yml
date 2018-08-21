@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "8"
+env:
+  - TRAVIS_CI=1
+cache:
+  yarn: true
+  directories:
+    - node_modules
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep-history: true
+  local-dir: docs/.vuepress/dist
+  on:
+    branch: master
+install:
+  npm i
+script:
+  - npm run deploy

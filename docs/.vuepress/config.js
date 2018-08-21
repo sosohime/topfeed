@@ -1,9 +1,7 @@
 module.exports = {
 	title: "Topfeed",
-	description: "SSR FrameWork",
-	base: "/",
-	dest: "./dist",
-
+	description: "基于Koa和React的同构最佳实践",
+	base: "/topfeed/",
 	themeConfig: {
 		nav: [
 			{ text: "指南", link: "/guide/" },
@@ -16,7 +14,14 @@ module.exports = {
 				{
 					title: "指南",
 					collapsable: false,
-					children: ["", "getting-started", "i18n", "advanced"]
+					children: [
+						"",
+						"getting-started",
+						"structure",
+						"core-concepts",
+						"i18n",
+						"advanced"
+					]
 				}
 			]
 		},
