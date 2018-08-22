@@ -21,7 +21,8 @@ module.exports = {
 						"structure",
 						"core-concepts",
 						"i18n",
-						"advanced"
+						"advanced",
+						"typescript"
 					]
 				}
 			],
@@ -34,9 +35,9 @@ module.exports = {
 						"universal",
 						"routing",
 						"data",
-						"bundle",
 						"build-config",
-						"caching"
+						"caching",
+						"ab"
 					]
 				}
 			]

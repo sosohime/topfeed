@@ -134,8 +134,6 @@ const serverRender = (props: ContextProps) => {
 export default (__BROWSER__ ? clientRender() : serverRender);
 ```
 
-//
-
 ## 带有逻辑配置的组件(Logic Collocation with Components)
 
 ::: tip @reach/router 暂时好像不支持 matchRoute 操作，没有办法根据当前 url 获取到匹配的 route 组件，待支持后可以在 route 组件上暴露出一个自定义静态函数`asyncData`。注意，由于此函数会在组件实例化之前调用，所以无法访问`this`。暂时将数据预取逻辑完全放在服务端 :::

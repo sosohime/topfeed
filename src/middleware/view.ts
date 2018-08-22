@@ -42,6 +42,12 @@ export default (config: {
 				const { page, prefetch_js } = this.ctx;
 				return injectJS(page, prefetch_js);
 			});
+			env.addGlobal("renderState", function injectState(this: any) {
+				const { initial_state } = this.ctx;
+				const safe = env.filters.safe;
+				const state = safe(stringify(JSON.stringify(initial_state)));
+				return `<script>${state}</script>`;
+			});
 			env.addFilter("xss", (str: string) => {
 				const safe = env.filters.safe;
 				return safe(stringify(str));
