@@ -29,7 +29,14 @@ module.exports = {
 				{
 					title: "React SSR 指南",
 					collapsable: false,
-					children: ["", "universal", "data", "routing"]
+					children: [
+						"",
+						"universal",
+						"routing",
+						"data",
+						"bundle",
+						"build-config"
+					]
 				}
 			]
 		},
