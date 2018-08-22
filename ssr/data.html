@@ -7,7 +7,7 @@
     <meta name="description" content="React + Koa + SSR + I18n 全栈解决方案">
     
     
-    <link rel="preload" href="/topfeed/assets/css/0.styles.b830c4be.css" as="style"><link rel="preload" href="/topfeed/assets/js/app.98a60661.js" as="script"><link rel="preload" href="/topfeed/assets/js/17.8a58a84e.js" as="script"><link rel="prefetch" href="/topfeed/assets/js/10.df5ee160.js"><link rel="prefetch" href="/topfeed/assets/js/2.cda51ec0.js"><link rel="prefetch" href="/topfeed/assets/js/3.814d7077.js"><link rel="prefetch" href="/topfeed/assets/js/4.d9d111b2.js"><link rel="prefetch" href="/topfeed/assets/js/5.f85ba91c.js"><link rel="prefetch" href="/topfeed/assets/js/6.6b2ba838.js"><link rel="prefetch" href="/topfeed/assets/js/7.bd23fcb0.js"><link rel="prefetch" href="/topfeed/assets/js/8.e0d972be.js"><link rel="prefetch" href="/topfeed/assets/js/9.752bbd83.js"><link rel="prefetch" href="/topfeed/assets/js/11.ccdeaffa.js"><link rel="prefetch" href="/topfeed/assets/js/12.ffd75718.js"><link rel="prefetch" href="/topfeed/assets/js/13.fde6e69a.js"><link rel="prefetch" href="/topfeed/assets/js/14.c9eed03a.js"><link rel="prefetch" href="/topfeed/assets/js/15.7e918636.js"><link rel="prefetch" href="/topfeed/assets/js/16.3d65d478.js"><link rel="prefetch" href="/topfeed/assets/js/18.d30c2624.js"><link rel="prefetch" href="/topfeed/assets/js/19.84d68491.js"><link rel="prefetch" href="/topfeed/assets/js/20.b084253d.js"><link rel="prefetch" href="/topfeed/assets/js/21.3b7e8ef4.js">
+    <link rel="preload" href="/topfeed/assets/css/0.styles.b830c4be.css" as="style"><link rel="preload" href="/topfeed/assets/js/app.dd7f1b64.js" as="script"><link rel="preload" href="/topfeed/assets/js/17.8fea8f37.js" as="script"><link rel="prefetch" href="/topfeed/assets/js/10.df5ee160.js"><link rel="prefetch" href="/topfeed/assets/js/2.cda51ec0.js"><link rel="prefetch" href="/topfeed/assets/js/3.814d7077.js"><link rel="prefetch" href="/topfeed/assets/js/4.d9d111b2.js"><link rel="prefetch" href="/topfeed/assets/js/5.f85ba91c.js"><link rel="prefetch" href="/topfeed/assets/js/6.6b2ba838.js"><link rel="prefetch" href="/topfeed/assets/js/7.bd23fcb0.js"><link rel="prefetch" href="/topfeed/assets/js/8.e0d972be.js"><link rel="prefetch" href="/topfeed/assets/js/9.752bbd83.js"><link rel="prefetch" href="/topfeed/assets/js/11.ccdeaffa.js"><link rel="prefetch" href="/topfeed/assets/js/12.ffd75718.js"><link rel="prefetch" href="/topfeed/assets/js/13.fde6e69a.js"><link rel="prefetch" href="/topfeed/assets/js/14.c9eed03a.js"><link rel="prefetch" href="/topfeed/assets/js/15.7e918636.js"><link rel="prefetch" href="/topfeed/assets/js/16.69398c1d.js"><link rel="prefetch" href="/topfeed/assets/js/18.d30c2624.js"><link rel="prefetch" href="/topfeed/assets/js/19.84d68491.js"><link rel="prefetch" href="/topfeed/assets/js/20.5aa95935.js"><link rel="prefetch" href="/topfeed/assets/js/21.3b7e8ef4.js">
     <link rel="stylesheet" href="/topfeed/assets/css/0.styles.b830c4be.css">
   </head>
   <body>
@@ -21,76 +21,76 @@
 <span class="token keyword">import</span> <span class="token punctuation">{</span> createModel <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@rematch/core&quot;</span><span class="token punctuation">;</span>
 
 <span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">TodoItem</span> <span class="token punctuation">{</span>
-  todo<span class="token punctuation">:</span> string<span class="token punctuation">;</span>
-  done<span class="token punctuation">:</span> boolean<span class="token punctuation">;</span>
+	todo<span class="token punctuation">:</span> string<span class="token punctuation">;</span>
+	done<span class="token punctuation">:</span> boolean<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 <span class="token keyword">export</span> <span class="token keyword">const</span> todo_list <span class="token operator">=</span> <span class="token function">createModel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-  state<span class="token punctuation">:</span> <span class="token punctuation">[</span>
-    <span class="token comment">// 状态</span>
-    <span class="token punctuation">{</span>
-      todo<span class="token punctuation">:</span> <span class="token string">&quot;Learn Typescript&quot;</span><span class="token punctuation">,</span>
-      done<span class="token punctuation">:</span> <span class="token boolean">false</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token punctuation">{</span>
-      todo<span class="token punctuation">:</span> <span class="token string">&quot;Try immer&quot;</span><span class="token punctuation">,</span>
-      done<span class="token punctuation">:</span> <span class="token boolean">false</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">]</span><span class="token punctuation">,</span>
-  reducers<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 同步action</span>
-    <span class="token function">add</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> TodoItem<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> payload<span class="token punctuation">:</span> TodoItem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      state<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token keyword">delete</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> TodoItem<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> payload<span class="token punctuation">:</span> TodoItem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">const</span> idx <span class="token operator">=</span> state<span class="token punctuation">.</span><span class="token function">findIndex</span><span class="token punctuation">(</span>item <span class="token operator">=&gt;</span> item<span class="token punctuation">.</span>todo <span class="token operator">===</span> payload<span class="token punctuation">.</span>todo<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span>idx <span class="token operator">!==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        state<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>idx<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
-      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token function">toggle</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> TodoItem<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> payload<span class="token punctuation">:</span> TodoItem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> item <span class="token keyword">of</span> state<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>item<span class="token punctuation">.</span>todo <span class="token operator">===</span> payload<span class="token punctuation">.</span>todo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-          item<span class="token punctuation">.</span>done <span class="token operator">=</span> <span class="token operator">!</span>item<span class="token punctuation">.</span>done<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-      <span class="token punctuation">}</span>
-      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  effects<span class="token punctuation">:</span> <span class="token punctuation">(</span>dispatch<span class="token punctuation">:</span> any<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
-    <span class="token comment">// 异步action</span>
-    <span class="token keyword">async</span> <span class="token function">delay_delete</span><span class="token punctuation">(</span>payload<span class="token punctuation">:</span> TodoItem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">await</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span>resolve <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-          <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      dispatch<span class="token punctuation">.</span>todo_list<span class="token punctuation">.</span><span class="token keyword">delete</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+	state<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+		<span class="token comment">// 状态</span>
+		<span class="token punctuation">{</span>
+			todo<span class="token punctuation">:</span> <span class="token string">&quot;Learn Typescript&quot;</span><span class="token punctuation">,</span>
+			done<span class="token punctuation">:</span> <span class="token boolean">false</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token punctuation">{</span>
+			todo<span class="token punctuation">:</span> <span class="token string">&quot;Try immer&quot;</span><span class="token punctuation">,</span>
+			done<span class="token punctuation">:</span> <span class="token boolean">false</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">]</span><span class="token punctuation">,</span>
+	reducers<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+		<span class="token comment">// 同步action</span>
+		<span class="token function">add</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> TodoItem<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> payload<span class="token punctuation">:</span> TodoItem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			state<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token keyword">delete</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> TodoItem<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> payload<span class="token punctuation">:</span> TodoItem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">const</span> idx <span class="token operator">=</span> state<span class="token punctuation">.</span><span class="token function">findIndex</span><span class="token punctuation">(</span>item <span class="token operator">=&gt;</span> item<span class="token punctuation">.</span>todo <span class="token operator">===</span> payload<span class="token punctuation">.</span>todo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>idx <span class="token operator">!==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				state<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>idx<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+			<span class="token keyword">return</span> state<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token function">toggle</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> TodoItem<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> payload<span class="token punctuation">:</span> TodoItem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> item <span class="token keyword">of</span> state<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span>item<span class="token punctuation">.</span>todo <span class="token operator">===</span> payload<span class="token punctuation">.</span>todo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+					item<span class="token punctuation">.</span>done <span class="token operator">=</span> <span class="token operator">!</span>item<span class="token punctuation">.</span>done<span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+			<span class="token keyword">return</span> state<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	effects<span class="token punctuation">:</span> <span class="token punctuation">(</span>dispatch<span class="token punctuation">:</span> any<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+		<span class="token comment">// 异步action</span>
+		<span class="token keyword">async</span> <span class="token function">delay_delete</span><span class="token punctuation">(</span>payload<span class="token punctuation">:</span> TodoItem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">await</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span>resolve <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+				<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+					<span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			dispatch<span class="token punctuation">.</span>todo_list<span class="token punctuation">.</span><span class="token keyword">delete</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div><p>创建通用 entry</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// universal/entry/universal/app.js</span>
 <span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> React <span class="token keyword">from</span> <span class="token string">&quot;react&quot;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> Router<span class="token punctuation">,</span> Link <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@reach/router&quot;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> Routers <span class="token keyword">from</span> <span class="token string">&quot;./routes&quot;</span><span class="token punctuation">;</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
-  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token punctuation">(</span>
-      <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>Link to<span class="token operator">=</span><span class="token string">&quot;/spa/feed&quot;</span> className<span class="token operator">=</span><span class="token string">&quot;link-item&quot;</span><span class="token operator">&gt;</span>
-          feed
-        <span class="token operator">&lt;</span><span class="token operator">/</span>Link<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>Link to<span class="token operator">=</span><span class="token string">&quot;/spa/story&quot;</span> className<span class="token operator">=</span><span class="token string">&quot;link-item&quot;</span><span class="token operator">&gt;</span>
-          story
-        <span class="token operator">&lt;</span><span class="token operator">/</span>Link<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>Router<span class="token operator">&gt;</span>
-          <span class="token punctuation">{</span>Routers<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">,</span> path<span class="token punctuation">,</span> component<span class="token punctuation">:</span> Compoennt <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token operator">&lt;</span>Compoennt key<span class="token operator">=</span><span class="token punctuation">{</span>name<span class="token punctuation">}</span> path<span class="token operator">=</span><span class="token punctuation">{</span>path<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
-          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>Router<span class="token operator">&gt;</span>
-      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-    <span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+	<span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token punctuation">(</span>
+			<span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+				<span class="token operator">&lt;</span>Link to<span class="token operator">=</span><span class="token string">&quot;/spa/feed&quot;</span> className<span class="token operator">=</span><span class="token string">&quot;link-item&quot;</span><span class="token operator">&gt;</span>
+					feed
+				<span class="token operator">&lt;</span><span class="token operator">/</span>Link<span class="token operator">&gt;</span>
+				<span class="token operator">&lt;</span>Link to<span class="token operator">=</span><span class="token string">&quot;/spa/story&quot;</span> className<span class="token operator">=</span><span class="token string">&quot;link-item&quot;</span><span class="token operator">&gt;</span>
+					story
+				<span class="token operator">&lt;</span><span class="token operator">/</span>Link<span class="token operator">&gt;</span>
+				<span class="token operator">&lt;</span>Router<span class="token operator">&gt;</span>
+					<span class="token punctuation">{</span>Routers<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">,</span> path<span class="token punctuation">,</span> component<span class="token punctuation">:</span> Compoennt <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+						<span class="token keyword">return</span> <span class="token operator">&lt;</span>Compoennt key<span class="token operator">=</span><span class="token punctuation">{</span>name<span class="token punctuation">}</span> path<span class="token operator">=</span><span class="token punctuation">{</span>path<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+					<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+				<span class="token operator">&lt;</span><span class="token operator">/</span>Router<span class="token operator">&gt;</span>
+			<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+		<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre></div><p>browser 和 server 公用入口</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// universal/entry/universal/index.js</span>
 <span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">&quot;./app&quot;</span><span class="token punctuation">;</span>
@@ -101,35 +101,35 @@
 <span class="token keyword">import</span> Loadable <span class="token keyword">from</span> <span class="token string">&quot;react-loadable&quot;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> Provider <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;react-redux&quot;</span><span class="token punctuation">;</span>
 <span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">ContextProps</span> <span class="token punctuation">{</span>
-  initial_state<span class="token punctuation">:</span> any<span class="token punctuation">;</span>
-  url<span class="token punctuation">:</span> string<span class="token punctuation">;</span>
+	initial_state<span class="token punctuation">:</span> any<span class="token punctuation">;</span>
+	url<span class="token punctuation">:</span> string<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">const</span> <span class="token function-variable function">clientRender</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> initial_state <span class="token operator">=</span> window<span class="token punctuation">.</span>__INITIAL_STATE__<span class="token punctuation">;</span>
-  <span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token function">configureStore</span><span class="token punctuation">(</span>initial_state<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  Loadable<span class="token punctuation">.</span><span class="token function">preloadReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-    ReactDOM<span class="token punctuation">.</span><span class="token function">hydrate</span><span class="token punctuation">(</span>
-      <span class="token operator">&lt;</span>Provider store<span class="token operator">=</span><span class="token punctuation">{</span>store<span class="token punctuation">}</span><span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>App <span class="token operator">/</span><span class="token operator">&gt;</span>
-      <span class="token operator">&lt;</span><span class="token operator">/</span>Provider<span class="token operator">&gt;</span><span class="token punctuation">,</span>
-      document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;root&quot;</span><span class="token punctuation">)</span>
-    <span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">const</span> initial_state <span class="token operator">=</span> window<span class="token punctuation">.</span>__INITIAL_STATE__<span class="token punctuation">;</span>
+	<span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token function">configureStore</span><span class="token punctuation">(</span>initial_state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	Loadable<span class="token punctuation">.</span><span class="token function">preloadReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+		ReactDOM<span class="token punctuation">.</span><span class="token function">hydrate</span><span class="token punctuation">(</span>
+			<span class="token operator">&lt;</span>Provider store<span class="token operator">=</span><span class="token punctuation">{</span>store<span class="token punctuation">}</span><span class="token operator">&gt;</span>
+				<span class="token operator">&lt;</span>App <span class="token operator">/</span><span class="token operator">&gt;</span>
+			<span class="token operator">&lt;</span><span class="token operator">/</span>Provider<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+			document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;root&quot;</span><span class="token punctuation">)</span>
+		<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token keyword">const</span> <span class="token function-variable function">serverRender</span> <span class="token operator">=</span> <span class="token punctuation">(</span>props<span class="token punctuation">:</span> ContextProps<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token function">configureStore</span><span class="token punctuation">(</span>props<span class="token punctuation">.</span>initial_state<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">return</span> <span class="token punctuation">(</span>
-    <span class="token operator">&lt;</span>Provider store<span class="token operator">=</span><span class="token punctuation">{</span>store<span class="token punctuation">}</span><span class="token operator">&gt;</span>
-      <span class="token operator">&lt;</span>ServerLocation url<span class="token operator">=</span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>url<span class="token punctuation">}</span><span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>App <span class="token operator">/</span><span class="token operator">&gt;</span>
-      <span class="token operator">&lt;</span><span class="token operator">/</span>ServerLocation<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>Provider<span class="token operator">&gt;</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token function">configureStore</span><span class="token punctuation">(</span>props<span class="token punctuation">.</span>initial_state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token punctuation">(</span>
+		<span class="token operator">&lt;</span>Provider store<span class="token operator">=</span><span class="token punctuation">{</span>store<span class="token punctuation">}</span><span class="token operator">&gt;</span>
+			<span class="token operator">&lt;</span>ServerLocation url<span class="token operator">=</span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>url<span class="token punctuation">}</span><span class="token operator">&gt;</span>
+				<span class="token operator">&lt;</span>App <span class="token operator">/</span><span class="token operator">&gt;</span>
+			<span class="token operator">&lt;</span><span class="token operator">/</span>ServerLocation<span class="token operator">&gt;</span>
+		<span class="token operator">&lt;</span><span class="token operator">/</span>Provider<span class="token operator">&gt;</span>
+	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span>__BROWSER__ <span class="token operator">?</span> <span class="token function">clientRender</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> serverRender<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><h2 id="带有逻辑配置的组件-logic-collocation-with-components">带有逻辑配置的组件(Logic Collocation with Components)</h2> <div class="tip custom-block"><p class="custom-block-title">@reach/router 暂时好像不支持 matchRoute 操作，没有办法根据当前 url 获取到匹配的 route 组件，待支持后可以在 route 组件上暴露出一个自定义静态函数`asyncData`。注意，由于此函数会在组件实例化之前调用，所以无法访问`this`。暂时将数据预取逻辑完全放在服务端 :::</p> <h2 id="服务器端数据预取-server-data-fetching">服务器端数据预取(Server Data Fetching)</h2> <div class="tip custom-block"><p class="custom-block-title">受限于@reach/router 对于 matchRoute 操作的支持，暂时没有办法根据当前 rul 自动执行匹配路由组件的 asynData 操作，故暂时完全在服务端做数据预取逻辑 :::</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// server/controller/universalController.ts</span>
+</code></pre></div><h2 id="带有逻辑配置的组件-logic-collocation-with-components">带有逻辑配置的组件(Logic Collocation with Components)</h2> <div class="tip custom-block"><p class="custom-block-title">TIP</p> <p>@reach/router 暂时好像不支持 matchRoute 操作，没有办法根据当前 url 获取到匹配的 route 组件，待支持后可以在 route 组件上暴露出一个自定义静态函数<code>asyncData</code>。注意，由于此函数会在组件实例化之前调用，所以无法访问<code>this</code>。暂时将数据预取逻辑完全放在服务端</p></div> <h2 id="服务器端数据预取-server-data-fetching">服务器端数据预取(Server Data Fetching)</h2> <div class="tip custom-block"><p class="custom-block-title">TIP</p> <p>受限于@reach/router 对于 matchRoute 操作的支持，暂时没有办法根据当前 rul 自动执行匹配路由组件的 asynData 操作，故暂时完全在服务端做数据预取逻辑</p></div> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// server/controller/universalController.ts</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> isRedirect <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@reach/router&quot;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> ReactDOM <span class="token keyword">from</span> <span class="token string">&quot;react-dom/server&quot;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> React <span class="token keyword">from</span> <span class="token string">&quot;react&quot;</span><span class="token punctuation">;</span>
@@ -137,30 +137,30 @@
 <span class="token keyword">import</span> <span class="token punctuation">{</span> Context <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@topfeed/topfeed&quot;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">&quot;../public/node/universal&quot;</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> render <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token keyword">async</span> <span class="token function">main</span><span class="token punctuation">(</span>ctx<span class="token punctuation">:</span> Context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">//</span>
-    <span class="token keyword">const</span> prefetch_data <span class="token operator">=</span> <span class="token function">prefetch</span><span class="token punctuation">(</span>ctx<span class="token punctuation">.</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 暂时在服务端根据url预取组件所需的初始化状态</span>
-    <span class="token keyword">const</span> initial_state <span class="token operator">=</span> <span class="token punctuation">{</span>
-      locale<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-        locale<span class="token punctuation">:</span> ctx<span class="token punctuation">.</span>locale<span class="token punctuation">,</span>
-        messages<span class="token punctuation">:</span> ctx<span class="token punctuation">.</span>messages
-      <span class="token punctuation">}</span><span class="token punctuation">,</span>
-      prefetch_data<span class="token punctuation">:</span> prefetch_data
-    <span class="token punctuation">}</span><span class="token punctuation">;</span>
-    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      <span class="token keyword">await</span> ctx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">&quot;spa&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-        page<span class="token punctuation">:</span> <span class="token string">&quot;spa_ssr&quot;</span><span class="token punctuation">,</span>
-        html<span class="token punctuation">,</span>
-        initial_state
-      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isRedirect</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        ctx<span class="token punctuation">.</span><span class="token function">redirect</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span>uri<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        ctx<span class="token punctuation">.</span><span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">,</span> err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
+	<span class="token keyword">async</span> <span class="token function">main</span><span class="token punctuation">(</span>ctx<span class="token punctuation">:</span> Context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment">//</span>
+		<span class="token keyword">const</span> prefetch_data <span class="token operator">=</span> <span class="token function">prefetch</span><span class="token punctuation">(</span>ctx<span class="token punctuation">.</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 暂时在服务端根据url预取组件所需的初始化状态</span>
+		<span class="token keyword">const</span> initial_state <span class="token operator">=</span> <span class="token punctuation">{</span>
+			locale<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+				locale<span class="token punctuation">:</span> ctx<span class="token punctuation">.</span>locale<span class="token punctuation">,</span>
+				messages<span class="token punctuation">:</span> ctx<span class="token punctuation">.</span>messages
+			<span class="token punctuation">}</span><span class="token punctuation">,</span>
+			prefetch_data<span class="token punctuation">:</span> prefetch_data
+		<span class="token punctuation">}</span><span class="token punctuation">;</span>
+		<span class="token keyword">try</span> <span class="token punctuation">{</span>
+			<span class="token keyword">await</span> ctx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">&quot;spa&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+				page<span class="token punctuation">:</span> <span class="token string">&quot;spa_ssr&quot;</span><span class="token punctuation">,</span>
+				html<span class="token punctuation">,</span>
+				initial_state
+			<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isRedirect</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				ctx<span class="token punctuation">.</span><span class="token function">redirect</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span>uri<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+				ctx<span class="token punctuation">.</span><span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">,</span> err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> render<span class="token punctuation">;</span>
 </code></pre></div><p>通过调用<code>render('spa',{inital_state})</code>我们可以在模板上将服务端生成的<code>initial_state</code>，作为<code>window.__INITIAL_STATE__</code>状态,手动注入到模板中。而在客户端中，在挂载到应用程序之前，store 就应该能获取到状态: 模板注入<code>window.__INITIAL_STATE__</code></p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
@@ -175,7 +175,7 @@
 	</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
 	{{renderScripts()}}
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2 id="客户端数据预取-client-data-fetching">客户端数据预取(Client Data Fetching)</h2> <p>在客户端，处理数据预取有两种不同方式：</p> <ol><li><strong>在路由导航之前解析数据：</strong></li></ol> <p>使用此策略，应用程序会等待视图所需数据全部解析之后，再传入数据并处理当前视图。好处在于，可以直接在数据准备就绪时，传入视图渲染完整内容，但是如果数据预取需要很长时间，用户在当前视图会感受到&quot;明显卡顿&quot;。因此，如果使用此策略，建议提供一个数据加载指示器(data loading indicator)。且渲染的内容和用户数据没有关联，因此可以更好地将服务端渲染的内容进行缓存。 ::: tip 待支持 matchRoute 后，我们可以通过检查匹配的组件，并在全局路由钩子函数中执行 <code>asyncData</code> 函数，来在客户端实现此策略。注意，在初始路由准备就绪之后，我们应该注册此钩子，这样我们就不必再次获取服务器提取的数据。 :::</p> <ol start="2"><li><strong>匹配要渲染的视图后，再获取数据：</strong></li></ol> <p>此策略将客户端数据预取逻辑，放在视图组件的 <code>componentDidMount</code> 函数中。当路由导航被触发时，可以立即切换视图，因此应用程序具有更快的响应速度。然而，传入视图在渲染时不会有完整的可用数据。因此，对于使用此策略的每个视图组件，都需要具有条件加载状态。</p> <p>这两种策略是根本上不同的用户体验决策，应该根据你创建的应用程序的实际使用场景进行挑选。但是无论你选择哪种策略，当路由组件重用（同一路由，但是 params 或 query 已更改，例如，从 <code>user/1</code> 到 <code>user/2</code>）时，也应该调用 <code>asyncData</code> 函数。我们也可以通过纯客户端(client-only)的全局 mixin 来处理这个问题： ::: tip 后续可以在每个路由组件上自定义钩子，在路由切换时自动调用更新 redux 的状态 :::</p> <h2 id="store-代码拆分-store-code-splitting">Store 代码拆分(Store Code Splitting)</h2> <p>TODO ::: tip 在大型应用程序中，我们的 Redux store 可能会分为多个模块。当然，也可以将这些模块代码，分割到相应的路由组件 chunk 中。假设我们有以下 store 模块：</p> <p>由于模块现在是路由组件的依赖，所以它将被 webpack 移动到路由组件的异步 chunk 中。 :::</p></div></div></div> <div class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">8/22/2018, 11:20:15 AM</span></div></div> <div class="page-nav"><p class="inner"><span class="prev">
+</code></pre></div><h2 id="客户端数据预取-client-data-fetching">客户端数据预取(Client Data Fetching)</h2> <p>在客户端，处理数据预取有两种不同方式：</p> <ol><li><strong>在路由导航之前解析数据：</strong></li></ol> <p>使用此策略，应用程序会等待视图所需数据全部解析之后，再传入数据并处理当前视图。好处在于，可以直接在数据准备就绪时，传入视图渲染完整内容，但是如果数据预取需要很长时间，用户在当前视图会感受到&quot;明显卡顿&quot;。因此，如果使用此策略，建议提供一个数据加载指示器(data loading indicator)。且渲染的内容和用户数据没有关联，因此可以更好地将服务端渲染的内容进行缓存。</p> <div class="tip custom-block"><p class="custom-block-title">TIP</p> <p>待支持 matchRoute 后，我们可以通过检查匹配的组件，并在全局路由钩子函数中执行 <code>asyncData</code> 函数，来在客户端实现此策略。注意，在初始路由准备就绪之后，我们应该注册此钩子，这样我们就不必再次获取服务器提取的数据。</p></div> <ol start="2"><li><strong>匹配要渲染的视图后，再获取数据：</strong></li></ol> <p>此策略将客户端数据预取逻辑，放在视图组件的 <code>componentDidMount</code> 函数中。当路由导航被触发时，可以立即切换视图，因此应用程序具有更快的响应速度。然而，传入视图在渲染时不会有完整的可用数据。因此，对于使用此策略的每个视图组件，都需要具有条件加载状态。</p> <p>这两种策略是根本上不同的用户体验决策，应该根据你创建的应用程序的实际使用场景进行挑选。但是无论你选择哪种策略，当路由组件重用（同一路由，但是 params 或 query 已更改，例如，从 <code>user/1</code> 到 <code>user/2</code>）时，也应该调用 <code>asyncData</code> 函数。我们也可以通过纯客户端(client-only)的全局 mixin 来处理这个问题： ::: tip 后续可以在每个路由组件上自定义钩子，在路由切换时自动调用更新 redux 的状态 :::</p> <h2 id="store-代码拆分-store-code-splitting">Store 代码拆分(Store Code Splitting)</h2> <p>TODO</p> <div class="tip custom-block"><p class="custom-block-title">TIP</p> <p>在大型应用程序中，我们的 Redux store 可能会分为多个模块。当然，也可以将这些模块代码，分割到相应的路由组件 chunk 中。假设我们有以下 store 模块：</p> <p>由于模块现在是路由组件的依赖，所以它将被 webpack 移动到路由组件的异步 chunk 中。</p></div></div> <div class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">8/22/2018, 11:25:37 AM</span></div></div> <div class="page-nav"><p class="inner"><span class="prev">
         ←
         <a href="/topfeed/ssr/routing.html" class="prev">
           路由和代码分割
@@ -184,6 +184,6 @@
         </a>
         →
       </span></p></div> </div> <!----></div></div>
-    <script src="/topfeed/assets/js/17.8a58a84e.js" defer></script><script src="/topfeed/assets/js/app.98a60661.js" defer></script>
+    <script src="/topfeed/assets/js/17.8fea8f37.js" defer></script><script src="/topfeed/assets/js/app.dd7f1b64.js" defer></script>
   </body>
 </html>
