@@ -23,9 +23,9 @@ topfeed-project
 │   ├── entry
 │   │   ├── simple (简单页面)
 │   │   └── spa-ssr
-│   │       ├── app.tsx // 页面组件
+│   │       ├── app.tsx // 通用 entry(universal entry)
 │   │       ├── index.less // 页面相关样式
-│   │       ├── index.tsx // client和ssr的入口文件
+│   │       ├── index.tsx // client和server的入口文件(内部区分browser和server)
 │   │       ├── models // redux的model
 │   │           ├── configure.tsx redux的configstore
 │   │           ├── index.tsx 所有的model组合

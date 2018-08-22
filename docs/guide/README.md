@@ -16,7 +16,7 @@ $ npm install
 ```bash
 npm run client:dev
 npm run server:dev
-open localhost:777
+open localhost:7777
 ```
 
 ## 逐步构建

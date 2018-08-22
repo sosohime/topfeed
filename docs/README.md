@@ -7,7 +7,11 @@ footer: MIT Licensed | Copyright © 2018-present Evan You
 ---
 
 <div style="text-align: center">
-  <Bit/>
+  <p class="bit-sponsor">
+    <a href="https://vuepress.vuejs.org/" target="_blank">
+      <span>This project is Heavily inspired by vue 全家桶</span>
+    </a>
+  </p>
 </div>
 
 <div class="features">

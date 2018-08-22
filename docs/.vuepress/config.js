@@ -5,6 +5,7 @@ module.exports = {
 	themeConfig: {
 		nav: [
 			{ text: "指南", link: "/guide/" },
+			{ text: "SSR指南", link: "/ssr/" },
 			{ text: "API", link: "/api/" },
 			{ text: "教程", link: "/tutorials/" },
 			{ text: "GitHub", link: "https://github.com/TopFeed/topfeed" }
@@ -22,6 +23,13 @@ module.exports = {
 						"i18n",
 						"advanced"
 					]
+				}
+			],
+			"/ssr/": [
+				{
+					title: "React SSR 指南",
+					collapsable: false,
+					children: ["", "universal", "data", "routing"]
 				}
 			]
 		},
