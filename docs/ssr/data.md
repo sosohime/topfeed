@@ -17,53 +17,53 @@ export * from "./todo_list"; //combineReducers
 import { createModel } from "@rematch/core";
 
 export interface TodoItem {
-  todo: string;
-  done: boolean;
+	todo: string;
+	done: boolean;
 }
 export const todo_list = createModel({
-  state: [
-    // 状态
-    {
-      todo: "Learn Typescript",
-      done: false
-    },
-    {
-      todo: "Try immer",
-      done: false
-    }
-  ],
-  reducers: {
-    // 同步action
-    add(state: TodoItem[], payload: TodoItem) {
-      state.push(payload);
-    },
-    delete(state: TodoItem[], payload: TodoItem) {
-      const idx = state.findIndex(item => item.todo === payload.todo);
-      if (idx !== -1) {
-        state.splice(idx, 1);
-      }
-      return state;
-    },
-    toggle(state: TodoItem[], payload: TodoItem) {
-      for (const item of state) {
-        if (item.todo === payload.todo) {
-          item.done = !item.done;
-        }
-      }
-      return state;
-    }
-  },
-  effects: (dispatch: any) => ({
-    // 异步action
-    async delay_delete(payload: TodoItem) {
-      await new Promise(resolve => {
-        setTimeout(() => {
-          resolve();
-        }, 1000);
-      });
-      dispatch.todo_list.delete(payload);
-    }
-  })
+	state: [
+		// 状态
+		{
+			todo: "Learn Typescript",
+			done: false
+		},
+		{
+			todo: "Try immer",
+			done: false
+		}
+	],
+	reducers: {
+		// 同步action
+		add(state: TodoItem[], payload: TodoItem) {
+			state.push(payload);
+		},
+		delete(state: TodoItem[], payload: TodoItem) {
+			const idx = state.findIndex(item => item.todo === payload.todo);
+			if (idx !== -1) {
+				state.splice(idx, 1);
+			}
+			return state;
+		},
+		toggle(state: TodoItem[], payload: TodoItem) {
+			for (const item of state) {
+				if (item.todo === payload.todo) {
+					item.done = !item.done;
+				}
+			}
+			return state;
+		}
+	},
+	effects: (dispatch: any) => ({
+		// 异步action
+		async delay_delete(payload: TodoItem) {
+			await new Promise(resolve => {
+				setTimeout(() => {
+					resolve();
+				}, 1000);
+			});
+			dispatch.todo_list.delete(payload);
+		}
+	})
 });
 ```
 
@@ -75,23 +75,23 @@ import * as React from "react";
 import { Router, Link } from "@reach/router";
 import Routers from "./routes";
 export default class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Link to="/spa/feed" className="link-item">
-          feed
-        </Link>
-        <Link to="/spa/story" className="link-item">
-          story
-        </Link>
-        <Router>
-          {Routers.map(({ name, path, component: Compoennt }) => {
-            return <Compoennt key={name} path={path} />;
-          })}
-        </Router>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div>
+				<Link to="/spa/feed" className="link-item">
+					feed
+				</Link>
+				<Link to="/spa/story" className="link-item">
+					story
+				</Link>
+				<Router>
+					{Routers.map(({ name, path, component: Compoennt }) => {
+						return <Compoennt key={name} path={path} />;
+					})}
+				</Router>
+			</div>
+		);
+	}
 }
 ```
 
@@ -107,43 +107,47 @@ import { ServerLocation } from "@reach/router";
 import Loadable from "react-loadable";
 import { Provider } from "react-redux";
 export interface ContextProps {
-  initial_state: any;
-  url: string;
+	initial_state: any;
+	url: string;
 }
 
 const clientRender = () => {
-  const initial_state = window.__INITIAL_STATE__;
-  const store = configureStore(initial_state);
-  Loadable.preloadReady().then(() => {
-    ReactDOM.hydrate(
-      <Provider store={store}>
-        <App />
-      </Provider>,
-      document.getElementById("root")
-    );
-  });
+	const initial_state = window.__INITIAL_STATE__;
+	const store = configureStore(initial_state);
+	Loadable.preloadReady().then(() => {
+		ReactDOM.hydrate(
+			<Provider store={store}>
+				<App />
+			</Provider>,
+			document.getElementById("root")
+		);
+	});
 };
 
 const serverRender = (props: ContextProps) => {
-  const store = configureStore(props.initial_state);
-  return (
-    <Provider store={store}>
-      <ServerLocation url={props.url}>
-        <App />
-      </ServerLocation>
-    </Provider>
-  );
+	const store = configureStore(props.initial_state);
+	return (
+		<Provider store={store}>
+			<ServerLocation url={props.url}>
+				<App />
+			</ServerLocation>
+		</Provider>
+	);
 };
 export default (__BROWSER__ ? clientRender() : serverRender);
 ```
 
 ## 带有逻辑配置的组件(Logic Collocation with Components)
 
-::: tip @reach/router 暂时好像不支持 matchRoute 操作，没有办法根据当前 url 获取到匹配的 route 组件，待支持后可以在 route 组件上暴露出一个自定义静态函数`asyncData`。注意，由于此函数会在组件实例化之前调用，所以无法访问`this`。暂时将数据预取逻辑完全放在服务端 :::
+::: tip
+@reach/router 暂时好像不支持 matchRoute 操作，没有办法根据当前 url 获取到匹配的 route 组件，待支持后可以在 route 组件上暴露出一个自定义静态函数`asyncData`。注意，由于此函数会在组件实例化之前调用，所以无法访问`this`。暂时将数据预取逻辑完全放在服务端
+:::
 
 ## 服务器端数据预取(Server Data Fetching)
 
-:::tip 受限于@reach/router 对于 matchRoute 操作的支持，暂时没有办法根据当前 rul 自动执行匹配路由组件的 asynData 操作，故暂时完全在服务端做数据预取逻辑 :::
+::: tip
+受限于@reach/router 对于 matchRoute 操作的支持，暂时没有办法根据当前 rul 自动执行匹配路由组件的 asynData 操作，故暂时完全在服务端做数据预取逻辑
+:::
 
 ```js
 // server/controller/universalController.ts
@@ -154,30 +158,30 @@ import prefetch from "lib/prefetch";
 import { Context } from "@topfeed/topfeed";
 import App from "../public/node/universal";
 const render = {
-  async main(ctx: Context) {
-    //
-    const prefetch_data = prefetch(ctx.url); // 暂时在服务端根据url预取组件所需的初始化状态
-    const initial_state = {
-      locale: {
-        locale: ctx.locale,
-        messages: ctx.messages
-      },
-      prefetch_data: prefetch_data
-    };
-    try {
-      await ctx.render("spa", {
-        page: "spa_ssr",
-        html,
-        initial_state
-      });
-    } catch (err) {
-      if (isRedirect(err)) {
-        ctx.redirect(err.uri);
-      } else {
-        ctx.throw(500, err.message);
-      }
-    }
-  }
+	async main(ctx: Context) {
+		//
+		const prefetch_data = prefetch(ctx.url); // 暂时在服务端根据url预取组件所需的初始化状态
+		const initial_state = {
+			locale: {
+				locale: ctx.locale,
+				messages: ctx.messages
+			},
+			prefetch_data: prefetch_data
+		};
+		try {
+			await ctx.render("spa", {
+				page: "spa_ssr",
+				html,
+				initial_state
+			});
+		} catch (err) {
+			if (isRedirect(err)) {
+				ctx.redirect(err.uri);
+			} else {
+				ctx.throw(500, err.message);
+			}
+		}
+	}
 };
 export default render;
 ```
@@ -205,7 +209,10 @@ export default render;
 
 1. **在路由导航之前解析数据：**
 
-使用此策略，应用程序会等待视图所需数据全部解析之后，再传入数据并处理当前视图。好处在于，可以直接在数据准备就绪时，传入视图渲染完整内容，但是如果数据预取需要很长时间，用户在当前视图会感受到"明显卡顿"。因此，如果使用此策略，建议提供一个数据加载指示器(data loading indicator)。且渲染的内容和用户数据没有关联，因此可以更好地将服务端渲染的内容进行缓存。 ::: tip 待支持 matchRoute 后，我们可以通过检查匹配的组件，并在全局路由钩子函数中执行 `asyncData` 函数，来在客户端实现此策略。注意，在初始路由准备就绪之后，我们应该注册此钩子，这样我们就不必再次获取服务器提取的数据。 :::
+使用此策略，应用程序会等待视图所需数据全部解析之后，再传入数据并处理当前视图。好处在于，可以直接在数据准备就绪时，传入视图渲染完整内容，但是如果数据预取需要很长时间，用户在当前视图会感受到"明显卡顿"。因此，如果使用此策略，建议提供一个数据加载指示器(data loading indicator)。且渲染的内容和用户数据没有关联，因此可以更好地将服务端渲染的内容进行缓存。
+::: tip
+待支持 matchRoute 后，我们可以通过检查匹配的组件，并在全局路由钩子函数中执行 `asyncData` 函数，来在客户端实现此策略。注意，在初始路由准备就绪之后，我们应该注册此钩子，这样我们就不必再次获取服务器提取的数据。
+:::
 
 2. **匹配要渲染的视图后，再获取数据：**
 
@@ -215,6 +222,9 @@ export default render;
 
 ## Store 代码拆分(Store Code Splitting)
 
-TODO ::: tip 在大型应用程序中，我们的 Redux store 可能会分为多个模块。当然，也可以将这些模块代码，分割到相应的路由组件 chunk 中。假设我们有以下 store 模块：
+TODO
+::: tip
+在大型应用程序中，我们的 Redux store 可能会分为多个模块。当然，也可以将这些模块代码，分割到相应的路由组件 chunk 中。假设我们有以下 store 模块：
 
-由于模块现在是路由组件的依赖，所以它将被 webpack 移动到路由组件的异步 chunk 中。 :::
+由于模块现在是路由组件的依赖，所以它将被 webpack 移动到路由组件的异步 chunk 中。
+:::
