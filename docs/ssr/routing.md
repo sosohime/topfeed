@@ -8,8 +8,6 @@
 
 ```js
 // entry/spa/routers.tsx
-import Loadable from "react-loadable";
-import Loading from "components/loading";
 import Feed from "components/feed";
 import Story from "components/story";
 export default [
@@ -54,11 +52,10 @@ export default class App extends React.Component {
 }
 ```
 
-现在我们需要在 `index.tsx` 中实现客户端和服务器端路由逻辑：
+现在我们需要在 `index.tsx` 中实现客户端和服务器端路由逻辑：我们通过**BROWSER**来区分 node 和 browser 打包的入口代码。
 
 ```js
 import App from "./app";
-import configureStore from "./models/configure";
 import ReactDOM from "react-dom";
 import React from "react";
 import { ServerLocation } from "@reach/router";
@@ -66,29 +63,17 @@ import Loadable from "react-loadable";
 import { Provider } from "react-redux";
 import "./index.less";
 export interface ContextProps {
-  initial_state: any;
   url: string;
 }
-
 const clientRender = () => {
-  const initial_state = window.__INITIAL_STATE__;
-  const store = configureStore(initial_state);
-  ReactDOM.hydrate(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementById("root")
-  );
+  ReactDOM.hydrate(<App />, document.getElementById("root"));
 };
 
 const serverRender = (props: ContextProps) => {
-  const store = configureStore(props.initial_state);
   return (
-    <Provider store={store}>
-      <ServerLocation url={props.url}>
-        <App />
-      </ServerLocation>
-    </Provider>
+    <ServerLocation url={props.url}>
+      <App />
+    </ServerLocation>
   );
 };
 export default (__BROWSER__ ? clientRender() : serverRender);
@@ -105,25 +90,18 @@ import App from "../public/node/spa_ssr";
 import { Context } from "@topfeed/topfeed";
 const render = {
   async main(ctx: Context) {
-    const initial_state = {
-      locale: {
-        locale: ctx.locale,
-        messages: ctx.messages
-      }
-    };
     try {
-      const html = ReactDOM.renderToString(
-        <App initial_state={initial_state} />
-      );
+      const html = ReactDOM.renderToString(<App url={ctx.url} />);
       await ctx.render("spa", {
-        page: "spa_ssr",
-        html,
-        initial_state: JSON.stringify(initial_state)
+        page: "spa", // 对应前端入口页面
+        html
       });
     } catch (err) {
       if (isRedirect(err)) {
+        //如果是前端的页面跳转，那么服务端需进行对应跳转
         ctx.redirect(err.uri);
       } else {
+        // render时报错
         ctx.throw(500, err.message);
       }
     }
@@ -137,6 +115,7 @@ export default render;
 应用程序的代码分割或惰性加载，有助于减少浏览器在初始渲染中下载的资源体积，可以极大地改善大体积 bundle 的可交互时间(TTI - time-to-interactive)。这里的关键在于，对初始首屏而言，"只加载所需"。我们使用 react-loadable 实现代码分割。使用 react-loadable 后的路由配置示例。
 
 ```js
+// entry/spa/router.js
 import Loadable from "react-loadable";
 import Loading from "components/loading";
 export default [
@@ -145,7 +124,7 @@ export default [
     path: "/spa/feed",
     component: Loadable({
       loader: () =>
-        import(/* webpackPrefetch: true */ "containers/spa-ssr/feed"),
+        import(/* webpackPrefetch: true */ "containers/spa-ssr/feed"), // 对于非initial chunk进行prefetch，减小前端页面跳转白屏时间
       loading: Loading
     })
   },

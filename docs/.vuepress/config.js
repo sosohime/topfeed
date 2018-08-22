@@ -37,6 +37,7 @@ module.exports = {
 						"data",
 						"build-config",
 						"caching",
+						"streaming",
 						"ab"
 					]
 				}

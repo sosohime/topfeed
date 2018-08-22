@@ -22,6 +22,7 @@ export interface TodoItem {
 }
 export const todo_list = createModel({
   state: [
+    // 状态
     {
       todo: "Learn Typescript",
       done: false
@@ -32,6 +33,7 @@ export const todo_list = createModel({
     }
   ],
   reducers: {
+    // 同步action
     add(state: TodoItem[], payload: TodoItem) {
       state.push(payload);
     },
@@ -52,6 +54,7 @@ export const todo_list = createModel({
     }
   },
   effects: (dispatch: any) => ({
+    // 异步action
     async delay_delete(payload: TodoItem) {
       await new Promise(resolve => {
         setTimeout(() => {
@@ -140,33 +143,32 @@ export default (__BROWSER__ ? clientRender() : serverRender);
 
 ## 服务器端数据预取(Server Data Fetching)
 
+:::tip 受限于@reach/router 对于 matchRoute 操作的支持，暂时没有办法根据当前 rul 自动执行匹配路由组件的 asynData 操作，故暂时完全在服务端做数据预取逻辑 :::
+
 ```js
 // server/controller/universalController.ts
 import { isRedirect } from "@reach/router";
 import * as ReactDOM from "react-dom/server";
 import * as React from "react";
-import App from "../public/node/universal";
+import prefetch from "lib/prefetch";
 import { Context } from "@topfeed/topfeed";
+import App from "../public/node/universal";
 const render = {
   async main(ctx: Context) {
+    //
+    const prefetch_data = prefetch(ctx.url); // 暂时在服务端根据url预取组件所需的初始化状态
     const initial_state = {
       locale: {
         locale: ctx.locale,
         messages: ctx.messages
-      }
+      },
+      prefetch_data: prefetch_data
     };
     try {
-      const { html, scripts, styles } = ssrRender({
-        App,
-        url: ctx.url,
-        initial_state
-      });
       await ctx.render("spa", {
         page: "spa_ssr",
-        prefetch_js: scripts,
-        prefetch_css: styles,
         html,
-        initial_state: JSON.stringify(initial_state)
+        initial_state
       });
     } catch (err) {
       if (isRedirect(err)) {
@@ -178,6 +180,23 @@ const render = {
   }
 };
 export default render;
+```
+
+通过调用`render('spa',{inital_state})`我们可以在模板上将服务端生成的`initial_state`，作为`window.__INITIAL_STATE__`状态,手动注入到模板中。而在客户端中，在挂载到应用程序之前，store 就应该能获取到状态: 模板注入`window.__INITIAL_STATE__`
+
+```html
+<head>
+	{{renderStyles()}}
+</head>
+<body>
+  <div id="root">
+	 {{html|safe}}
+	</div>
+	<script>
+	  {{renderState()}} // 注入initial_state状态
+	</script>
+	{{renderScripts()}}
+</body>
 ```
 
 ## 客户端数据预取(Client Data Fetching)
@@ -196,8 +215,6 @@ export default render;
 
 ## Store 代码拆分(Store Code Splitting)
 
-TODO ::: tip
-
-在大型应用程序中，我们的 Redux store 可能会分为多个模块。当然，也可以将这些模块代码，分割到相应的路由组件 chunk 中。假设我们有以下 store 模块：
+TODO ::: tip 在大型应用程序中，我们的 Redux store 可能会分为多个模块。当然，也可以将这些模块代码，分割到相应的路由组件 chunk 中。假设我们有以下 store 模块：
 
 由于模块现在是路由组件的依赖，所以它将被 webpack 移动到路由组件的异步 chunk 中。 :::

@@ -25,6 +25,45 @@
 
 请注意，考虑到如果第三方 library 不是以上面的通用用法编写，则将其集成到服务器渲染的应用程序中，可能会很棘手。你*可能*要通过模拟(mock)一些全局变量来使其正常运行（如可以通过 jsdom 来 mock 浏览器的 dom 对象，进行 html 解析），但这只是 hack 的做法，并且可能会干扰到其他 library 的环境检测代码。
 
-## 使用 Code Fence 控制代码只在客户端/浏览器执行
+## 使用 webpack 控制代码只在客户端/浏览器执行
 
-借助于 webpack 的 definePlugin，我们可以在编译期间控制代码只运行在客户端或者服务端
+相比于在运行时区分客户端代码和服务端代码，编译时区分是更好的办法，借助于 webpack 的 definePlugin，我们可以在编译期间控制代码只运行在客户端或者服务端。
+
+```js
+if (__BROWSER__) {
+  // node的bundle不包含该代码
+  window.location = "xxx";
+}
+if (__NODE__) {
+  // browser的bundle不包含该代码
+  const file = fs.readFileSync("./config");
+}
+```
+
+```js
+// webpack.config.node.js
+module.exports = {
+  ...
+  plugins: [
+     new webpack.DefinePlugin({
+      __BROWSER__: false,
+      __NODE__: true
+    })
+  ]
+  ...
+}
+```
+
+```js
+// webpack.config.browser.js
+module.exports = {
+  ...
+  plugins: [
+     new webpack.DefinePlugin({
+      __BROWSER__: true,
+      __NODE__: false
+    }),
+  ]
+  ...
+}
+```
