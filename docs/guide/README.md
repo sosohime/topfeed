@@ -14,9 +14,9 @@ $ npm install
 ## 启动项目
 
 ```bash
-npm run client:dev
-npm run server:dev
-open localhost:7777
+$ npm run client:dev
+$ npm run server:dev # 第一次启动时，等待client:dev执行完再启动server
+$ open localhost:3333
 ```
 
 ## 逐步构建
