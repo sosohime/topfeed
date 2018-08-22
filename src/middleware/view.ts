@@ -10,6 +10,38 @@ export default (config: {
 		ext: "njk",
 		path,
 		configureEnvironment: (env: any) => {
+			function injectJS(page: string, prefetch_js: string[] = []) {
+				const safe = env.filters.safe;
+				const mainJS = [...prefetch_js, `${page}.js`].map(
+					x => (manifest as any)[x]
+				);
+				const ret = safe(
+					mainJS.map(src => `<script src="${src}"></script>`).join("\n")
+				);
+				return ret;
+			}
+			function injectCSS(page: string, prefetch_css: string[] = []) {
+				const safe = env.filters.safe;
+				const mainCSS = [`${page}.css`, ...prefetch_css].map(
+					x => (manifest as any)[x]
+				);
+				const ret = safe(
+					mainCSS
+						.map(
+							src => `<link rel="stylesheet" href="${src}" type="text/css" />`
+						)
+						.join("\n")
+				);
+				return ret;
+			}
+			env.addGlobal("renderStyles", function injectJS(this: any) {
+				const { page, prefetch_css } = this.ctx;
+				return injectCSS(page, prefetch_css);
+			});
+			env.addGlobal("renderScripts", function injectCSS(this: any) {
+				const { page, prefetch_js } = this.ctx;
+				return injectJS(page, prefetch_js);
+			});
 			env.addFilter("xss", (str: string) => {
 				const safe = env.filters.safe;
 				return safe(stringify(str));
@@ -43,8 +75,7 @@ export default (config: {
 			);
 		},
 		nunjucksConfig: {
-			trimBlocks: true,
-			stringify
+			trimBlocks: true
 		}
 	});
 	await middleware(ctx, next);

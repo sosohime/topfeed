@@ -1,6 +1,6 @@
 module.exports = {
 	title: "Topfeed",
-	description: "基于Koa和React的同构最佳实践",
+	description: "React + Koa + SSR + I18n 全栈解决方案",
 	base: "/topfeed/",
 	themeConfig: {
 		nav: [
@@ -35,7 +35,8 @@ module.exports = {
 						"routing",
 						"data",
 						"bundle",
-						"build-config"
+						"build-config",
+						"caching"
 					]
 				}
 			]
