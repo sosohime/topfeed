@@ -16,7 +16,9 @@ $ npm install
 ```bash
 $ npm run client:dev
 $ npm run server:dev # 第一次启动时，等待client:dev执行完再启动server
-$ open localhost:3333
+$ open localhost:3333/simple # 一个简单的页面
+$ open localhost:3333/ssr # 一个使用页面使用了SSR + I18n + Redux + todo_list
+$ open localhoat:3333/spa_ssr # 一个单页的SSR页面，SPA + SSR + Prefetch
 ```
 
 ## 逐步构建

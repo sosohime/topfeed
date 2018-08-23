@@ -18,8 +18,9 @@ module.exports = {
 					collapsable: false,
 					children: [
 						"",
-						"getting-started",
 						"structure",
+						"objects",
+						"middleware",
 						"core-concepts",
 						"i18n",
 						"advanced",
