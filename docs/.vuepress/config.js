@@ -7,8 +7,7 @@ module.exports = {
 			{ text: "指南", link: "/guide/" },
 			{ text: "SSR指南", link: "/ssr/" },
 			{ text: "配置参考", link: "/config/" },
-			{ text: "API", link: "/api/" },
-			{ text: "教程", link: "/tutorials/" },
+			{ text: "教程", link: "/guide/tutorial" },
 			{ text: "GitHub", link: "https://github.com/TopFeed/topfeed" }
 		],
 		sidebar: {
@@ -23,8 +22,8 @@ module.exports = {
 						"middleware",
 						"core-concepts",
 						"i18n",
-						"advanced",
-						"typescript"
+						"typescript",
+						"security"
 					]
 				}
 			],
