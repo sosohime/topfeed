@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
+import * as preload_middleware from "../../middleware/pre_load";
 import { Core } from "../../core";
 const CACHE = Symbol("cache");
 class Loader {
@@ -7,7 +8,9 @@ class Loader {
 		this.app = app;
 	}
 	load() {
-		this.loadService(this.app.root).loadRouter(this.app.root);
+		this.loadService(this.app.root)
+			.loadMiddleware(this.app.root)
+			.loadRouter(this.app.root);
 	}
 	// 加载router
 	loadRouter(root: string) {
@@ -24,6 +27,12 @@ class Loader {
 		if (fs.existsSync(servicePath)) {
 			const services = require(path.join(root, "service"));
 			this.loadToContext(services, this.app, "service");
+		}
+		return this;
+	}
+	loadMiddleware(root: string) {
+		for (const [, middleware] of Object.entries(preload_middleware)) {
+			this.app.use(middleware(this.app));
 		}
 		return this;
 	}

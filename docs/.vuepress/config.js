@@ -6,6 +6,7 @@ module.exports = {
 		nav: [
 			{ text: "指南", link: "/guide/" },
 			{ text: "SSR指南", link: "/ssr/" },
+			{ text: "配置参考", link: "/config/" },
 			{ text: "API", link: "/api/" },
 			{ text: "教程", link: "/tutorials/" },
 			{ text: "GitHub", link: "https://github.com/TopFeed/topfeed" }
@@ -44,13 +45,5 @@ module.exports = {
 			]
 		},
 		lastUpdated: "Last Updated"
-	},
-
-	markdown: {
-		// options for markdown-it-anchor
-		anchor: { permalink: false },
-		config: md => {
-			md.use(require("markdown-it-katex"));
-		}
 	}
 };

@@ -91,6 +91,7 @@
     "koa": "^2.5.2",
     "koa-nunjucks-2": "^3.0.2",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "rndm": "^1.2.0"
   }
 }
