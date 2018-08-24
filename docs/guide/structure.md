@@ -87,7 +87,7 @@ topfeed-project
 - `client/plugins` 前端的 webpack 或者 babel 的插件
 - `client/scripts` 前端的脚本文件
 - `client/style` 所有页面公用的主题样式
-- `client/stypigns` 前端的业务相关 ts 定义
+- `client/typings` 前端的业务相关 ts 定义
 - `client/ui` 前端的与业务无关的 UI 组件
 - `server/router` 用于配置 URL 路由规则
 - `server/controller**` 用于解析用户的输入，处理后返回相应的结果

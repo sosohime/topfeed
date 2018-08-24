@@ -23,7 +23,7 @@ $ open localhoat:3333/spa_ssr # 一个单页的SSR页面，支持SSR + Tree Shak
 
 ## 逐步构建
 
-通常可以通上一节的方式，使用 topfeed-init 快速新建项目
+通常可以通上一节的方式，使用 topfeed-init 快速新建项目, 但为了让大家更好的了解 topfeed，接下来，我们将跳过脚手架，手动一步步的搭建出一个 单页 SSR 的 Hacker News。
 
 ### 初始化项目
 

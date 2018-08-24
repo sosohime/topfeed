@@ -20,6 +20,7 @@ Topfeed 对 Koa 的原生对象进行了一些扩展
 扩展方式如下
 
 ```ts
+TODO;
 ```
 
 ### Context
@@ -41,4 +42,5 @@ Context 是一个请求级别的对象，继承自 Koa.Context。在每一次用
 否则 ts 检查会报错。
 
 ```ts
+TODO;
 ```
