@@ -31,12 +31,12 @@
 
 ```js
 if (__BROWSER__) {
-  // node的bundle不包含该代码
-  window.location = "xxx";
+	// node的bundle不包含该代码
+	window.location = "xxx";
 }
 if (__NODE__) {
-  // browser的bundle不包含该代码
-  const file = fs.readFileSync("./config");
+	// browser的bundle不包含该代码
+	const file = fs.readFileSync("./config");
 }
 ```
 
@@ -66,4 +66,15 @@ module.exports = {
   ]
   ...
 }
+```
+
+## 使用 ClientOnly 组件
+
+如果你正在使用，或者需要展示一个对于 SSR 不怎么友好的组件（比如访问了 window 或者 dom），你可以将它们包裹在内置的 `<ClientOnly>` 组件中，如下所示
+
+```js
+function Demo() {
+	return <span>{JSON.parse}</span>;
+}
+<ClientOnly />;
 ```

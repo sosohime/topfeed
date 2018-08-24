@@ -21,19 +21,12 @@ module.exports = {
 };
 ```
 
-### client_port
+### port
 
 - Type: `number`
 - Default: `4002`
 
 webpack DevServer 的启动端口
-
-### server_port
-
-- Type: `number`
-- Default: `3333`
-
-server 的启动端口
 
 ### outputPath
 

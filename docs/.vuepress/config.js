@@ -22,6 +22,8 @@ module.exports = {
 						"middleware",
 						"core-concepts",
 						"i18n",
+						"ssr",
+						"cookie-and-session",
 						"typescript",
 						"security"
 					]
