@@ -50,6 +50,14 @@ export default (config: {
 					`<script>window.__INITIAL_STATE__ = JSON.parse(${state})</script>`
 				);
 			});
+			env.addGlobal("renderProps", function injectProps(this: any) {
+				const { initial_props } = this.ctx;
+				const safe = env.filters.safe;
+				const state = stringify(JSON.stringify(initial_props));
+				return safe(
+					`<script>window.__INITIAL_PROPS__ = JSON.parse(${state})</script>`
+				);
+			});
 			env.addFilter("xss", (str: string) => {
 				const safe = env.filters.safe;
 				return safe(stringify(str));
