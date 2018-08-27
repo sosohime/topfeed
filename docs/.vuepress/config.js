@@ -19,13 +19,13 @@ module.exports = {
 						"",
 						"structure",
 						"objects",
-						"middleware",
-						"core-concepts",
 						"i18n",
 						"ssr",
 						"cookie-and-session",
 						"typescript",
-						"security"
+						"security",
+						"middleware",
+						"debug-and-test"
 					]
 				}
 			],
