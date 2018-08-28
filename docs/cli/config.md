@@ -71,26 +71,25 @@ module.exports = {
 
 TODO
 
-### 查看内部 webpack 配置
-
-因为 topfeed-cli 内置了 webpack 的配置，如果你想要查看内部 webpack 的配置，可以通过 DEBUG 进行查看内部命令启动是的 webpack 配置
-
-```bash
-DEBUG=topfeed npx topfeed dev --target ssr
-```
-
 ### font
 
 - Type: `object`
+
+```ts
+{
+	input: string; // 输入svg目录
+	output: string; // 输出iconfont目录
+	fontName: string; // 输出的iconfont的文件名
+}
+```
+
 - Default:
 
 ```js
   {
-    font: {
       input: path.resolve(process.cwd(), "client/assets/svg"),
       output: path.resolve(process.cwd(), "client/assets/fonts"),
       fontName: "i18nfont"
-    }
   }
 ```
 
@@ -104,8 +103,8 @@ webpack-dev-server 的 publicPath
 
 ```ts
 {
-	url: string; // 下载文案的地址
-	project: string; // poly的项目编号
+	url: string?; // 下载文案的地址 如果
+	project: string?; // poly的项目编号
 	draft: boolean; // 下载文案文案的草稿版还是正式版(配合project使用)
 	output: string; // 文案的存放目录
 }
