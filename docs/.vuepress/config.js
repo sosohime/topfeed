@@ -6,7 +6,19 @@ module.exports = {
 		nav: [
 			{ text: "指南", link: "/guide/" },
 			{ text: "SSR指南", link: "/ssr/" },
-			{ text: "配置参考", link: "/config/" },
+			{
+				text: "CLI",
+				items: [
+					{
+						text: "CLI命令",
+						link: "/cli/"
+					},
+					{
+						text: "CLI配置",
+						link: "/cli/config"
+					}
+				]
+			},
 			{ text: "教程", link: "/guide/tutorial" },
 			{ text: "GitHub", link: "https://github.com/TopFeed/topfeed" }
 		],

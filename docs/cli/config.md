@@ -78,3 +78,46 @@ TODO
 ```bash
 DEBUG=topfeed npx topfeed dev --target ssr
 ```
+
+### font
+
+- Type: `object`
+- Default:
+
+```js
+  {
+    font: {
+      input: path.resolve(process.cwd(), "client/assets/svg"),
+      output: path.resolve(process.cwd(), "client/assets/fonts"),
+      fontName: "i18nfont"
+    }
+  }
+```
+
+生成字体的配置,
+
+webpack-dev-server 的 publicPath
+
+### i18n
+
+- Type: `object`
+
+```ts
+{
+	url: string; // 下载文案的地址
+	project: string; // poly的项目编号
+	draft: boolean; // 下载文案文案的草稿版还是正式版(配合project使用)
+	output: string; // 文案的存放目录
+}
+```
+
+- Default:
+
+```js
+ {
+		project: "1",
+		output: path.resolve(process.cwd(), "server/locales"),
+		draft: false,
+		whitelist: ["ko", "ja"]
+	}
+```
