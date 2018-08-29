@@ -28,7 +28,7 @@ export default (api: any) => {
 				"babel-plugin-module-resolver",
 				{
 					cwd: "babelrc",
-					extensions: [".ts", ".tsx", ".js", ".jsx"],
+					extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
 					root: ["./"]
 				}
 			],
