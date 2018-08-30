@@ -5,7 +5,6 @@ export default (api: any) => {
 			[
 				"@babel/env",
 				{
-					modules: env === "node" ? false : "commonjs",
 					targets:
 						env !== "node"
 							? {
