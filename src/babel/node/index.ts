@@ -1,10 +1,10 @@
 export default (api: any) => {
-	console.log("env:", api.env());
 	return {
 		presets: [
 			[
 				"@babel/env",
 				{
+					modules: false,
 					targets: {
 						node: "current"
 					}
