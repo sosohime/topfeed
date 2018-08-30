@@ -23,14 +23,6 @@ export default (api: any) => {
 				? "dynamic-import-node"
 				: "@babel/plugin-syntax-dynamic-import",
 			"@babel/plugin-proposal-class-properties",
-			[
-				"babel-plugin-module-resolver",
-				{
-					cwd: "babelrc",
-					extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
-					root: ["./"]
-				}
-			],
 			"react-loadable/babel"
 		]
 	};
