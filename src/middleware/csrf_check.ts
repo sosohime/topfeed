@@ -1,4 +1,4 @@
-import { Context } from "koa";
+import { Context } from "../types";
 import * as crypto from "crypto";
 export default (config: any) => async (ctx: Context, next: any) => {
 	const { salt } = config;

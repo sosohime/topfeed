@@ -1,4 +1,4 @@
-import { Context } from "koa";
+import { Context } from "../types";
 import * as crypto from "crypto";
 import generate_crsf from "../lib/csrf";
 
