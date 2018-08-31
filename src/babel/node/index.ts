@@ -1,4 +1,5 @@
 export default (api: any) => {
+	api.env();
 	return {
 		presets: [
 			[
