@@ -4,7 +4,6 @@ export default (api: any) => {
 			[
 				"@babel/env",
 				{
-					modules: false,
 					targets: {
 						node: "current"
 					}
