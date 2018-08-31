@@ -94,6 +94,7 @@ topfeed-project
 - `server/service/**` 用于编写业务层逻辑
 - `server/middleware/**` 用于编写中间件
 - `server/public/**` 用于存放前端的编译产出文件
+- `server/static/**` 用于存放服务内的静态资源(非 cdn 资源，如 google 验证文件等)
 - `server/config/*` 用于存放不同环境的配置文件
 - `server/server.ts` 用于存放服务端业务入口代码
 - `server/app.ts` 服务端入口代码，可以存放运维部署相关的逻辑

@@ -39,8 +39,15 @@ Context 是一个请求级别的对象，继承自 Koa.Context。在每一次用
 #### 业务扩展
 
 为了控制业务的扩展，收敛所有的扩展逻辑，用户在扩展 Application 时需要在 typings 里声明 Application 的扩展，
-否则 ts 检查会报错。
+否则 ts 检查会报错。业务扩展定义需要添加注释。
 
 ```ts
-TODO;
+// typings/modules.d.ts
+declare module "@topfeed/topfeed/types" {
+	interface Context {
+		userAgent: string; // 客户端ua信息
+		language: string; // 用户语言
+		region: string; // 用户地区
+	}
+}
 ```
