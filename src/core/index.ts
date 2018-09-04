@@ -5,7 +5,7 @@ import { Middleware } from "../types";
 export interface CoreConfig {
 	root?: string; // 应用所在目录
 }
-class Application extends KoaApplication {
+export class Application extends KoaApplication {
 	loader: Loader;
 	root: string;
 	config: any;
@@ -32,5 +32,3 @@ class Application extends KoaApplication {
 		this.use(this.router.routes()).use(this.router.allowedMethods());
 	}
 }
-
-export { Application };

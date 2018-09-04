@@ -1,4 +1,4 @@
-import { Application } from "../../types";
+import { Application } from "../../core";
 import { Context } from "../../types";
 export default class Controller {
 	app: Application;
