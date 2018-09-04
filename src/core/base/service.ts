@@ -1,7 +1,7 @@
-import { Core } from "../../core";
+import { Application } from "../../types";
 import { Context } from "../../types";
 class Service {
-	app: Core;
+	app: Application;
 	constructor(public ctx: Context) {
 		this.ctx = ctx;
 		this.app = ctx.app;

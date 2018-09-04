@@ -1,15 +1,11 @@
-import * as Koa from "koa";
+import * as KoaApplication from "koa";
 import * as Router from "koa-router";
 import Loader from "./loader";
-import Service from "./base/service";
-import Controller from "./base/controller";
 import { Middleware } from "../types";
 export interface CoreConfig {
 	root?: string; // 应用所在目录
 }
-class Core extends Koa {
-	static Controller: typeof Controller = Controller;
-	static Service: typeof Service = Service;
+class Application extends KoaApplication {
 	loader: Loader;
 	root: string;
 	config: any;
@@ -24,7 +20,7 @@ class Core extends Koa {
 		this.init();
 	}
 	// @ts-ignore
-	async listen(...args): Koa.Server {
+	async listen(...args): KoaApplication.Server {
 		await this.beforeStart();
 		super.listen(...args);
 	}
@@ -37,4 +33,4 @@ class Core extends Koa {
 	}
 }
 
-export { Core, Core as Application, Controller, Service };
+export { Application };

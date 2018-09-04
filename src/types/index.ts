@@ -1,7 +1,8 @@
 import * as KoaApplication from "koa";
 import * as compose from "koa-compose";
-import { Core as Application } from "../core";
+import { Application } from "../core";
 type PlainObject<T = any> = { [key: string]: T };
+export { Application } from "../core";
 export type Middleware = compose.Middleware<Context>;
 /**
  * 基本Context可以提供扩展

@@ -1,10 +1,10 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as preload_middleware from "../../middleware/pre_load";
-import { Core } from "../../core";
+import { Application } from "../../core";
 const CACHE = Symbol("cache");
 class Loader {
-	constructor(public app: Core) {
+	constructor(public app: Application) {
 		this.app = app;
 	}
 	load() {
@@ -36,7 +36,7 @@ class Loader {
 		}
 		return this;
 	}
-	loadToContext(targets: any[], app: Core, property: string) {
+	loadToContext(targets: any[], app: Application, property: string) {
 		// 挂载到context下
 		Object.defineProperty(app.context, property, {
 			get() {

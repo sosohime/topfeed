@@ -3,11 +3,9 @@
   "description": "topfeed",
   "version": "0.0.20",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "files": [
     "scripts",
     "dist",
-    "types",
     "middleware.js",
     "babel.js"
   ],
@@ -27,8 +25,7 @@
   "homepage": "https://github.com/TopFeed/topfeed#readme",
   "scripts": {
     "clean": "rimraf dist && rimraf lib",
-    "build": "npm run clean && npm run build:typings && tsc",
-    "build:typings": "tsc -d && node ./scripts/build_types",
+    "build": "npm run clean && tsc",
     "build:all": "bash ./scripts/build.sh",
     "tsc": "tsc ",
     "dev": "tsc --watch",
@@ -58,7 +55,6 @@
     "@babel/preset-stage-0": "^7.0.0-beta.51",
     "@babel/preset-typescript": "^7.0.0-beta.51",
     "@babel/register": "^7.0.0-beta.51",
-    "@types/koa": "^2.0.46",
     "bundlesize": "^0.17.0",
     "dts-bundle": "^0.7.3",
     "dts-bundle-generator": "^1.6.1",
@@ -89,7 +85,7 @@
     ]
   },
   "dependencies": {
-    "@types/koa-router": "^7.0.31",
+    "@types/koa": "^2.0.46",
     "js-stringify": "^1.0.2",
     "koa": "^2.5.2",
     "koa-nunjucks-2": "^3.0.2",
