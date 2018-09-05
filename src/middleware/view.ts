@@ -45,7 +45,7 @@ export default (config: {
 			env.addGlobal("renderState", function injectState(this: any) {
 				const { initial_state } = this.ctx;
 				const safe = env.filters.safe;
-				const state = stringify(JSON.stringify(initial_state));
+				const state = stringify(JSON.stringify(initial_state || {}));
 				return safe(
 					`<script>window.__INITIAL_STATE__ = JSON.parse(${state})</script>`
 				);
@@ -53,7 +53,7 @@ export default (config: {
 			env.addGlobal("renderProps", function injectProps(this: any) {
 				const { initial_props } = this.ctx;
 				const safe = env.filters.safe;
-				const state = stringify(JSON.stringify(initial_props));
+				const state = stringify(JSON.stringify(initial_props || {}));
 				return safe(
 					`<script>window.__INITIAL_PROPS__ = JSON.parse(${state})</script>`
 				);
