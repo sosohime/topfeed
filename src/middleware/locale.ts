@@ -1,5 +1,6 @@
 import { Context } from "../types";
 export interface LocaleConfig {
+	forceLocale?: string;
 	defaultLocale?: string;
 	allowLangs?: string[];
 	cookieField?: string;
@@ -12,6 +13,7 @@ export interface LocaleConfig {
 }
 export default (config: LocaleConfig) => async (ctx: Context, next: any) => {
 	const {
+		forceLocale,
 		defaultLocale = "en",
 		allowLangs = ["en", "pt", "ja", "hi", "id"],
 		cookieField = "locale",
@@ -27,6 +29,9 @@ export default (config: LocaleConfig) => async (ctx: Context, next: any) => {
 	// 最后从accept-header header里获取locale信息
 	if (!locale) {
 		locale = <string>ctx.acceptsLanguages(allowLangs) || defaultLocale;
+	}
+	if (forceLocale) {
+		locale = forceLocale;
 	}
 	ctx.locale = locale;
 	ctx.messages = messages[ctx.locale] || messages[defaultLocale];
