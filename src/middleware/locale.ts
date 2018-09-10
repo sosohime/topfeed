@@ -34,6 +34,10 @@ export default (config: LocaleConfig) => async (ctx: Context, next: any) => {
 		locale = forceLocale;
 	}
 	ctx.locale = locale;
-	ctx.messages = messages[ctx.locale] || messages[defaultLocale];
+	const [lanugage = "", region = ""] = locale.split("-");
+	ctx.language = lanugage;
+	ctx.region = region;
+	ctx.messages =
+		messages[ctx.locale] || messages[lanugage] || messages[defaultLocale];
 	await next();
 };

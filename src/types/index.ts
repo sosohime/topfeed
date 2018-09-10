@@ -46,6 +46,8 @@ export interface Context extends KoaApplication.Context {
 	response: Response;
 	helper: Helper;
 	locale: string;
+	language: string;
+	region: string;
 	messages: {
 		[key: string]: string;
 	};
