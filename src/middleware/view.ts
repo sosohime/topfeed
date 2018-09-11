@@ -58,9 +58,9 @@ export default (config: {
 					`<script>window.__INITIAL_PROPS__ = JSON.parse(${state})</script>`
 				);
 			});
-			env.addFilter("xss", (str: string) => {
+			env.addFilter("xss", (obj: any) => {
 				const safe = env.filters.safe;
-				return safe(stringify(str));
+				return safe(stringify(JSON.stringify(obj)));
 			});
 			env.addFilter("injectJS", (page: string, prefetch: string[] = []) => {
 				const safe = env.filters.safe;
