@@ -2,10 +2,10 @@ import * as koaNunjucks from "koa-nunjucks-2";
 import * as stringify from "js-stringify";
 import { Context } from "../typings";
 export default (config: {
-	manifest: { [key: string]: string };
+	manifest?: { [key: string]: string };
 	path: string;
 }) => async (ctx: Context, next: any) => {
-	const { manifest, path } = config;
+	const { manifest = {}, path } = config;
 	const middleware = koaNunjucks({
 		ext: "njk",
 		path,

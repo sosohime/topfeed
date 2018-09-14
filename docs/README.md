@@ -17,7 +17,7 @@ footer: MIT Licensed | Copyright © 2018-present hardfist
 <div class="features">
   <div class="feature">
     <h2>功能丰富</h2>
-    <p>对Babel,Typescript,ESLint，SSR和I18n提供开箱即用的支持</p>
+    <p>对Babel,Typescript,ESLint,SSR和I18n提供开箱即用的支持</p>
   </div>
   <div class="feature">
     <h2>易于扩展</h2>
