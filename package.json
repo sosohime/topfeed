@@ -88,6 +88,7 @@
   },
   "dependencies": {
     "@types/koa": "^2.0.46",
+    "@types/koa-router": "^7.0.31",
     "js-stringify": "^1.0.2",
     "koa": "^2.5.2",
     "koa-nunjucks-2": "^3.0.2",
