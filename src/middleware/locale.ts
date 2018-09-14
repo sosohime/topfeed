@@ -1,4 +1,4 @@
-import { Context } from "../types";
+import { Context } from "../typings";
 export interface LocaleConfig {
 	forceLocale?: string;
 	defaultLocale?: string;

@@ -1,12 +1,12 @@
 import * as KoaApplication from "koa";
 import * as Router from "koa-router";
 import Loader from "./loader";
-import { Middleware } from "../types";
+import { Middleware } from "typings";
 export interface CoreConfig {
 	root?: string; // 应用所在目录
 }
 export class Application extends KoaApplication {
-	loader: Loader;
+	loader: any;
 	root: string;
 	config: any;
 	router: any;

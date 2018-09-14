@@ -1,4 +1,4 @@
-import { Context } from "../types";
+import { Context } from "../typings";
 import * as crypto from "crypto";
 import generate_crsf from "../lib/csrf";
 

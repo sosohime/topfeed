@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as serve from "koa-static";
-import { Application } from "../core";
+import { Application } from "../typings";
 
 export default (app: Application) => async (ctx: any, next: any) => {
 	const root = app.root;

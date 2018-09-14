@@ -5,11 +5,12 @@
   "main": "dist/index.js",
   "files": [
     "scripts",
+    "src",
     "dist",
     "middleware.js",
     "babel.js"
   ],
-  "types": "dist/index.d.ts",
+  "types": "src/typings",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TopFeed/topfeed.git"

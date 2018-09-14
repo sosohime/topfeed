@@ -1,6 +1,6 @@
 import * as koaNunjucks from "koa-nunjucks-2";
 import * as stringify from "js-stringify";
-import { Context } from "../types";
+import { Context } from "../typings";
 export default (config: {
 	manifest: { [key: string]: string };
 	path: string;

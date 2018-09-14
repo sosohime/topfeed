@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as preload_middleware from "../../middleware/pre_load";
-import { Application } from "../../core";
+import { Application } from "typings";
 const CACHE = Symbol("cache");
 class Loader {
 	constructor(public app: Application) {

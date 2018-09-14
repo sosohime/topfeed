@@ -10,7 +10,8 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
 		"suppressImplicitAnyIndexErrors": true,
-		"noUnusedLocals": true
+    "noUnusedLocals": true,
+    "baseUrl": "./src",
   },
 	"include": ["src/**/*", "typings/**/*.d.ts"]
 }
