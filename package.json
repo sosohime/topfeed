@@ -1,7 +1,7 @@
 {
   "name": "@topfeed/topfeed",
   "description": "topfeed",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "main": "dist/index.js",
   "files": [
     "scripts",
