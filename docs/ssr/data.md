@@ -1,5 +1,9 @@
 # 数据预取和状态
 
+:::tip
+等待 React 的 Suspense 实现后，本章将会有大的改动
+:::
+
 ## 数据预取存储容器(Data Store)
 
 在服务器端渲染(SSR)期间，我们本质上是在渲染我们应用程序的"快照"，所以如果应用程序依赖于一些异步数据，**那么在开始渲染过程之前，需要先预取和解析好这些数据**。
@@ -141,6 +145,7 @@ export default (__BROWSER__ ? clientRender() : serverRender);
 
 ::: tip
 @reach/router 暂时好像不支持 matchRoute 操作，没有办法根据当前 url 获取到匹配的 route 组件，待支持后可以在 route 组件上暴露出一个自定义静态函数`asyncData`。注意，由于此函数会在组件实例化之前调用，所以无法访问`this`。暂时将数据预取逻辑完全放在服务端
+事实上一旦 React 的 suspense 实现，数据预期的同构逻辑将更加简单，不再依赖于 matchRoute 等操作。
 :::
 
 ## 服务器端数据预取(Server Data Fetching)

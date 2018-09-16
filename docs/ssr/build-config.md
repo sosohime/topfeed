@@ -18,12 +18,12 @@
 
 ### bundle 生成
 
-我们内置的 webpack 会自动的生成两份 borwser|node 两份 bundle,browser bundle 用于客户端注水，node bundle 用于服务端渲染，同时会生成 browser 的构建清单（manifest），用于支持为前端资源注入争取的 hash 值。在 topfeed.config.js 里可以配置 bundle 的生成路径
+我们内置的 webpack 会自动的生成两份 borwser|node 两份 bundle,browser bundle 用于客户端注水，node bundle 用于服务端渲染，同时会生成 browser 的构建清单（manifest），用于支持为前端资源注入正确的 hash 值。在 topfeed.config.js 里可以配置 bundle 的生成路径
 
 ```js
 // topfeed.config.js
 module.exports = {
-  outputPath: path.resolve(__dirname, "server/public") // node和browser的编译生成地址
+	outputPath: path.resolve(__dirname, "server/public") // node和browser的编译生成地址
 };
 ```
 
@@ -43,13 +43,13 @@ import { Core } from "@topfeed/topfeed";
 import clientManifest from "./public/browser/manifest.json";
 import { locale, nunjuck_view } from "@topfeed/topfeed/middleware";
 const app = new Core({
-  root: __dirname
+	root: __dirname
 });
 app.use(
-  nunjuck_view({
-    manifest: clientManifest, // 为模板注入manifest用于资源注入
-    path: path.join(__dirname, "view")
-  })
+	nunjuck_view({
+		manifest: clientManifest, // 为模板注入manifest用于资源注入
+		path: path.join(__dirname, "view")
+	})
 );
 ```
 

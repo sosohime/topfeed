@@ -87,13 +87,16 @@
     ]
   },
   "dependencies": {
+    "@topfeed/topfeed-cli": "0.0.15",
     "@types/koa": "^2.0.46",
     "@types/koa-router": "^7.0.31",
+    "@types/request-promise": "^4.1.42",
     "js-stringify": "^1.0.2",
     "koa": "^2.5.2",
     "koa-nunjucks-2": "^3.0.2",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
+    "request-promise": "^4.2.2",
     "rndm": "^1.2.0"
   }
 }
