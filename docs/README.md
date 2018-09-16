@@ -24,8 +24,8 @@ footer: MIT Licensed | Copyright © 2018-present hardfist
     <p>完全兼容React和Koa的已有生态系统</p>
   </div>
   <div class="feature">
-    <h2>无需Eject</h2>
-    <p>完全可配置的，无需eject，项目可以保持长期更新</p>
+    <h2>约定优于配置</h2>
+    <p>Topfeed奉行『约定优于配置』 ，按照一套统一的约定进行应用开发，减少配置和开发人员的学习成本。</p>
   </div>
 </div>
 

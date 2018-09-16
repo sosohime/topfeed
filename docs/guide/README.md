@@ -230,8 +230,143 @@ export default (app: Application) => {
 };
 ```
 
-### 编写 Middleware
+### 编写 service
 
-### 模板渲染
+实际应用中，Controller 一般不会自己产出数据，也不会包含复杂的逻辑，复杂的过程应该抽象为业务逻辑层`Service`。
+我们来添加一个 Service 抓取 [Hacker News](https://github.com/HackerNews/API)的数据，如下:
 
-### 自定义配置文件
+```ts
+import rp from "request-promise";
+import { serverUrl } from "constants/url";
+
+async function list(page = 1, pageSize = 10) {
+	let idList: { [key: string]: string } = {};
+	try {
+		idList = await rp({
+			method: "GET",
+			uri: `${serverUrl}/topstories.json`,
+			qs: {
+				orderBy: '"$key"',
+				startAt: `"${pageSize * (page - 1)}"`,
+				endAt: `"${pageSize * page - 1}"`
+			},
+			json: true
+		});
+	} catch (err) {
+		idList = {};
+	}
+	// parallel GET detail
+	const newsList = await Promise.all(
+		Object.keys(idList).map(key => {
+			const url = `${serverUrl}/item/${idList[key]}.json`;
+			return rp.get(url, {
+				json: true
+			});
+		})
+	);
+	return newsList;
+}
+
+export { list };
+```
+
+然后稍微修改下之前的 Controller:
+
+```ts
+import { Context } from "@topfeed/topfeed";
+import { list as news_list } from "service/news";
+async function list(ctx: Context) {
+	const page = (await ctx.query.page) || 1;
+	const newsList = await news_list(page);
+	await ctx.render("news", {
+		list: newsList
+	});
+}
+export { list };
+```
+
+## 前端渲染
+
+现在前后端分离已经成为主流趋势，对于复杂的页面后端渲染难以满足需求，因此我们进行前端渲染。
+
+### 生成前端页面
+
+在 topfeed 中，约定的存放页面代码的文件夹是 `client/entry`,接下来我们创建第一个页面组件，新建`client/entry/home/index.tsx` 和 `client/entry/home/app.tsx` 和 `client/entry/home/index.scss`
+
+```ts
+// client/entry/home/app.tsx
+import React from "react";
+import "./index.scss";
+export default () => {
+	return <div>Welcome to Topfeed</div>;
+};
+```
+
+```ts
+// client/entry/home/index.tsx
+import ReactDOM from "react-dom";
+import React from "react";
+import App from "./app";
+ReactDOM.render(<App />, document.getElementById("root"));
+```
+
+```css
+body {
+	background: antiquewhite;
+}
+```
+
+这样第一个页面就创建完成，接下来我们需要修改对应`home`的页面模板内容，此时`src/view/home.njk`不再负责实际的渲染，而只是负责渲染页面入口和加载对应的 js 和 css 资源，修改如下:
+
+```html
+<head>
+	{{renderStyles()}}
+</head>
+<body>
+  <div id="root"></div>
+	{{renderScripts()}}
+</body>
+```
+
+::: tip
+renderStyles: 用于注入打包的 css 文件
+renderScripts: 用于注入前端打包的 js 文件
+:::
+
+### 注入资源文件
+
+因为前端打包的 js 和 css 文件包含 hash 值，因此我们需要获取
+前端打包生成文件的信息，topfeed 内置了 manifest 的插件，会生成 manifest.json 文件，为此我们需要在服务端注入 manifest 信息，以便后端渲染模板时，能注入正确的资源文件。修改`server/server.ts`如下:
+
+```ts
+// server/server.ts
+import manifest from 'public/browser/manifest.json' // 获取前端生成的资源清单
+...
+app.use(
+	nunjuck_view({
+		manifest, // 注入资源清单到模板
+		path: path.join(__dirname, 'view')
+	})
+);
+...
+```
+
+### 映射页面关系
+
+完成资源文件注入和后端模板之后，我们还需要确定后端路由和前端页面的映射关系，为此修改`server/controller/homeController.tsx`
+
+```ts
+// server/controller/homeController.tsx
+import { Context } from "@topfeed/topfeed";
+async function main(ctx: Context, next: any) {
+	await ctx.render(
+		"home", // 对应 server/view/home.njk
+		{
+			page: "home" // 对应client/entry/home 页面
+		}
+	);
+}
+export { main };
+```
+
+## 服务端渲染
