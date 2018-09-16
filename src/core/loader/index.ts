@@ -8,9 +8,7 @@ class Loader {
 		this.app = app;
 	}
 	load() {
-		this.loadService(this.app.root)
-			.loadMiddleware(this.app.root)
-			.loadRouter(this.app.root);
+		this.loadMiddleware(this.app.root).loadRouter(this.app.root);
 	}
 	// 加载router
 	loadRouter(root: string) {
