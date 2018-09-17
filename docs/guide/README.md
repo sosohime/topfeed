@@ -311,7 +311,7 @@ ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 ```css
-body {
+<!-- client/entry/home/index.scss -- > body {
 	background: antiquewhite;
 }
 ```
@@ -674,9 +674,18 @@ export default connect(
 )(TodoList);
 ```
 
-### SPA + Redux
+### SPA
 
-TODO
+为了演示 SPA 的效果，我们将 news 页面拆分 feed 和 story 两个子页面，feed 页面包含了一个消息列表，而详情页(story)则包含了每条消息的详细信息。
+首先先构建两个页面。
+
+```tsx
+// client/container/news/feed
+```
+
+```tsx
+// client/container/news/story
+```
 
 ### SPA + Redux + SSR
 
