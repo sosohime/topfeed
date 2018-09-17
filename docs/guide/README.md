@@ -33,7 +33,7 @@ $ cd topfeed-news
 $ npm init
 $ npm i @topfeed/topfeed
 $ npm i @topfeed/topfeed-cli
-$ npm i nodemon babel-node # 用于自动重启node
+$ npm i -D nodemon babel-node # 用于自动重启node
 $ mkdir client server # 服务端和客户端相关代码
 ```
 
@@ -51,10 +51,10 @@ $ mkdir client server # 服务端和客户端相关代码
 
 ### server Babel 配置
 
-由于我们使用 typescript 进行开发，所以需进行 babel 配置
+由于我们使用 typescript 进行开发，所以需进行 babel 配置,topfeed 提供了默认的 babel 配置，直接使用即可。
 
 ```js
-// .babelrc.js
+// server/.babelrc.js
 const nodeConfig = require("@topfeed/topfeed/babel").node;
 module.exports = nodeConfig;
 ```
@@ -159,8 +159,7 @@ server/static
 ### 模板渲染
 
 绝大多数情况，我们需要读取数据后渲染模板，然后呈现给用户。故我们需要引入对应的模板引擎。
-topfeed 默认集成 nunjuck 模板引擎。
-启用 nunjuck 模板引擎
+topfeed 默认集成 nunjuck 模板引擎。按如下方式启用 nunjuck 模板引擎
 
 ```ts
 // server/server.ts
@@ -171,7 +170,7 @@ const app = new Application({
 // 启用nunjuck 进行模板渲染
 app.use(
 	nunjuck_view({
-		path: path.join(__dirname, "view")
+		path: path.join(__dirname, "view") // 模板所在文件夹
 	})
 );
 export async function startServer() {
@@ -236,6 +235,7 @@ export default (app: Application) => {
 我们来添加一个 Service 抓取 [Hacker News](https://github.com/HackerNews/API)的数据，如下:
 
 ```ts
+// server/serice/news.ts
 import rp from "request-promise";
 import { serverUrl } from "constants/url";
 
@@ -370,3 +370,111 @@ export { main };
 ```
 
 ## 服务端渲染
+
+前端渲染可以更加方便实现复杂的业务逻辑但是对 SEO 不够友好和首屏速度较慢，而服务端渲染模板对 SEO 比较友好且首屏速度较快，但是难以适应较复杂的业务逻辑，为此结合两者，我们可以进行采用服务端渲染，
+服务端渲染涉及到的知识较多，详细的服务端渲染指南请参考[SSR 指南](/ssr/)
+
+### bundle 生成
+
+服务端渲染需要分别为`browser`和`node`层生成`bundle`，以便`browser`端渲染和`server`端渲染，为此`topfeed`提供了服务端渲染的支持,修改`client:dev` scripts 如下:
+
+```json
+// package.json
+{
+	"scripts": {
+		"client:dev": "CONF_DEV=development topfeed dev --target ssr" // 此时修改 target为ssr会生成两份bundle
+	}
+}
+```
+
+### 通用入口
+
+server render 和 browser render 的使用方式不一致，为此我们需要分别为 browser 和 server 编写入口文件。
+为了简便，我们将两个入口统一写在`client/entry/index.tsx`里，通过
+
+```tsx
+import ReactDOM from "react-dom";
+import App from "./app";
+
+const clientRender = () => {
+	ReactDOM.hydrate(<App />, document.getElementById("root"));
+};
+
+const serverRender = () => {
+	return <App />;
+};
+export default (__BROWSER__ ? clientRender() : serverRender); // 通过 __BROWSER__ 区分server 和 browser入口
+```
+
+### server render
+
+编写完前端代码后，通过`npm run client:dev` 其会自动在`server/public`下生成`node`和`server`两个目录，其包含了`node`和`server`的两份打包 bundle，目录结构如下：
+
+```sh
+├── public
+│   ├── browser
+│   │   ├── home.css
+│   │   ├── home.css.map
+│   │   ├── home.js
+│   │   ├── home.js.map
+│   │   ├── manifest.json
+│   └── node
+│       ├── feed.js
+│       ├── home.css
+│       └── home.js
+```
+
+:::tip
+对于前端 bundle，生产环境下的生成文件应该要包含 hash 值以用于更新，而服务端的代码由于存储到服务端故不需要 hash 值，而在开发环境下，为了热更新，故前端的 bundle 也没有 hash 值。
+:::
+生成 bundle 之后，我们就可以在`server/controller/homeController.tsx`里调用生成的 bundle 文件进行服务端渲染了。
+
+```ts
+// server/controller/homeController.tsx
+import { Context } from "@topfeed/topfeed";
+import { renderToString } from "react-dom/server";
+import React from "react";
+import App from "public/node/home"; // home页对应的bundle入口
+async function main(ctx: Context, next: any) {
+	try {
+		const html = renderToString(<App />);
+		await ctx.render("home", {
+			page: "home", // 和 public/node/home对应
+			html // ssr 渲染的结果
+		});
+	} catch (err) {
+		ctx.throw(500, err); // 处理服务端渲染时的异常报错
+	}
+}
+export { main };
+```
+
+:::warning
+暂时 babel-node 只支持在`.tsx`里混入`jsx`语法，因此这里我们需要在将后缀改为`tsx`。
+:::
+服务端渲染生成内容后，我们需要将生成的内容注入模板，修改`server/view/home.njk`如下
+
+```html
+<head>
+	{{renderStyles()}}
+</head>
+<body>
+  <!-- 注入服务端渲染生成的内容 -->
+  <div id="root">{{html|safe}}</div>
+	{{renderScripts()}}
+</body>
+```
+
+:::warning
+服务端渲染的时候需要特别注意保证服务端渲染生成的内容和客户端首屏渲染的内容完全一致，否则会导致各种诡异的 bug，一些常见的问题如[服务端渲染](https://zhuanlan.zhihu.com/p/33887159),这里一个常见的问题是
+
+```html
+   <!-- 正确 -->
+  <div id="root">{{html|safe}}</div>
+  <!-- 错误，含有冗余的空白文本节点，会造成服务端渲染warning -->
+  <div id="root">
+    {{html|safe}}
+  </div>
+```
+
+:::
