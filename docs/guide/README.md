@@ -82,6 +82,8 @@ process.on("unhandledRejection", function(rejection) {
 startServer();
 ```
 
+`server/server.ts`是真正处理业务逻辑的地方。
+
 ```ts
 // server/server.ts
 import { Application } from "@topfeed/topfeed";
@@ -112,7 +114,7 @@ export { main };
 ```ts
 // server/router/index.tsx
 import { Application } from "@topfeed/topfeed";
-import * as homeController from "../controller/homeController";
+import * as homeController from "controller/homeController";
 
 export default (app: Application) => {
 	const router = app.router;
@@ -481,18 +483,18 @@ export { main };
 
 ### Model
 
-对于稍微上规模的代码，状态管理是不可获取的，Redux 是一个很好的状态管理库，但是其使用方式稍显复杂，因此我们使用了[Rematch](https://github.com/rematch/rematch)作为状态管理库，其兼容了 Redux 的使用方式的同时，大大简化了 Redux 的使用，同时对 Typescript 的支持也比较好。下面我们使用 rematch 来实现一个简化的 TodoList。
+对于稍微上规模的代码，状态管理是不可或缺的，`Redux` 是一个很好的状态管理库，但是其使用方式稍显冗杂，因此我们使用了[Rematch](https://github.com/rematch/rematch)作为状态管理库，其兼容了 `Redux` 的使用方式的同时，大大简化了 `Redux` 的使用，同时对 `Typescript` 的支持也比较好。下面我们使用 `rematch` 来实现一个简化的 `TodoList`。
 首先安装 rematch:
 
 ```sh
-npm i @rematch/core@next
+npm i @rematch/core@next # 我们使用了next的某些特性，此处需要加入@next
 ```
 
 创建 model，我们将 model 存放在 entry 里，里面包含三类文件
 
-- todo_list.tsx:子 reducer，在实际应用中我们通常对 reducer 进行拆分，每个 reducer 处理各自的逻辑，最后通过 combineReducer 将各子 reducer 组合成一个 rootReducer
-- index.tsx: rootReducer, 通过 export 继承的方式`export * from xxx, export * from yyy` 将各子 reducer 进行合并。
-- configure.tsx:createStore, 负责生成最终的 store,包括集成 redux 插件等工作（SSR 情况下会做更多的工作）。
+- `todo_list.tsx`:子 reducer，在实际应用中我们通常对 reducer 进行拆分，每个 reducer 处理各自的逻辑，最后通过 combineReducer 将各子 reducer 组合成一个 rootReducer
+- `index.tsx`: rootReducer, 通过 export 继承的方式`export * from xxx, export * from yyy` 将各子 reducer 进行合并。
+- `configure.tsx`:createStore, 负责生成最终的 store,包括集成 redux 插件等工作（SSR 情况下会做更多的工作）。
 
 ```tsx
 // entry/home/model/configure.tsx
@@ -516,10 +518,7 @@ export default function configure() {
 ```tsx
 // entry/home/models/todo_list.tsx
 import { createModel } from "@rematch/core"; // createModel负责根据传入的object生成对应typesript定义
-export interface TodoItem {
-	todo: string;
-	done: boolean;
-}
+import { TodoItem } from "typings";
 export const todo_list = createModel({
 	state: [] as TodoItem[],
 	reducers: {
@@ -555,6 +554,17 @@ export const todo_list = createModel({
 });
 ```
 
+```tsx
+// client/typings/state/todo.tsx
+export interface TodoItem {
+	todo: string;
+	done: boolean;
+}
+```
+
+:::tip
+开发中我们发现组件需要频繁的 connect 到 redux 里，且组件频繁复用一些模型定义（如文章类型，作者类型，读者类型等），因此我们将 redux 每个 reducer 的 state 类型定义统一维护，方便使用时方便使用这些类型定义。甚至这些定义并不需要用户手动定义，通过一些工具可以根据`Swagger`和`Thrift`自动生成`rpc`和`http`接口的对应的.d.ts 定义，这样极大地便利了后期的维护和重构。
+:::
 :::tip
 `rematch`的`model`对象由几个基本的属性，需要大家了解。
 
