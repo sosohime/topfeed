@@ -10,7 +10,7 @@
     "middleware.js",
     "babel.js"
   ],
-  "types": "src/typings",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TopFeed/topfeed.git"
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/TopFeed/topfeed#readme",
   "scripts": {
     "clean": "rimraf dist && rimraf lib",
-    "build": "npm run clean && tsc",
+    "build": "npm run clean && tsc  && node ./scripts/bundle",
     "build:all": "bash ./scripts/build.sh",
     "tsc": "tsc ",
     "dev": "tsc --watch",
@@ -58,7 +58,7 @@
     "@babel/preset-typescript": "^7.0.0-beta.51",
     "@babel/register": "^7.0.0-beta.51",
     "bundlesize": "^0.17.0",
-    "dts-bundle": "^0.7.3",
+    "concat": "^1.0.3",
     "dts-bundle-generator": "^1.6.1",
     "eslint": "^5.2.0",
     "glob": "^7.1.3",
