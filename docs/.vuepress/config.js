@@ -1,6 +1,6 @@
 module.exports = {
 	title: "Topfeed",
-	description: "React + Koa + SSR + I18n 全栈解决方案",
+	description: "React + Koa + SSR + I18n 渐进式全栈解决方案",
 	base: "/topfeed/",
 	themeConfig: {
 		nav: [

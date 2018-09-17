@@ -23,7 +23,7 @@ $ open localhoat:3333/spa_ssr # 一个单页的SSR页面，支持SSR + Tree Shak
 
 ## 逐步构建
 
-通常可以通上一节的方式，使用 topfeed-init 快速新建项目, 但为了让大家更好的了解 topfeed，接下来，我们将跳过脚手架，手动一步步的搭建出一个单页 SSR 的 Hacker News。最后的项目结果如 [目录结构](/guide/structure.md) 所示。
+通常可以通上一节的方式，使用 topfeed-init 快速新建项目, 但为了让大家更好的了解 topfeed，接下来，我们将跳过脚手架，手动一步步的搭建出一个单页 SSR 的 [Hacker News](https://news.ycombinator.com/)。最后的项目结果如 [目录结构](/guide/structure.md) 所示,最终代码地址[topfeed-news](https://github.com/TopFeed/topfeed-news);
 
 ### 初始化项目
 
@@ -478,3 +478,210 @@ export { main };
 ```
 
 :::
+
+### Model
+
+对于稍微上规模的代码，状态管理是不可获取的，Redux 是一个很好的状态管理库，但是其使用方式稍显复杂，因此我们使用了[Rematch](https://github.com/rematch/rematch)作为状态管理库，其兼容了 Redux 的使用方式的同时，大大简化了 Redux 的使用，同时对 Typescript 的支持也比较好。下面我们使用 rematch 来实现一个简化的 TodoList。
+首先安装 rematch:
+
+```sh
+npm i @rematch/core@next
+```
+
+创建 model，我们将 model 存放在 entry 里，里面包含三类文件
+
+- todo_list.tsx:子 reducer，在实际应用中我们通常对 reducer 进行拆分，每个 reducer 处理各自的逻辑，最后通过 combineReducer 将各子 reducer 组合成一个 rootReducer
+- index.tsx: rootReducer, 通过 export 继承的方式`export * from xxx, export * from yyy` 将各子 reducer 进行合并。
+- configure.tsx:createStore, 负责生成最终的 store,包括集成 redux 插件等工作（SSR 情况下会做更多的工作）。
+
+```tsx
+// entry/home/model/configure.tsx
+import { init } from "@rematch/core";
+import immerPlugin from "@rematch/immer";
+import * as models from ".";
+export type models = typeof models;
+export default function configure() {
+	const store = init({
+		models,
+		plugins: [immerPlugin()] // 实现immutable
+	});
+	return store;
+}
+```
+
+:::tip Immutable
+因为 redux 要求 reducer 是个纯函数，这意味着我们不能修改原来的对象，而是生成原有对象的深度拷贝，手动实现深度拷贝是很烦人的(代码里充斥着...的结构操作,代码可读性也变得很差)，因此我们考虑使用 immer 来实现 Immutable，这样大大简化了状态的更新操作。
+:::
+
+```tsx
+// entry/home/models/todo_list.tsx
+import { createModel } from "@rematch/core"; // createModel负责根据传入的object生成对应typesript定义
+export interface TodoItem {
+	todo: string;
+	done: boolean;
+}
+export const todo_list = createModel({
+	state: [] as TodoItem[],
+	reducers: {
+		add(state: TodoItem[], payload: TodoItem) {
+			state.push(payload);
+		},
+		delete(state: TodoItem[], payload: TodoItem) {
+			const idx = state.findIndex(item => item.todo === payload.todo);
+			if (idx !== -1) {
+				state.splice(idx, 1);
+			}
+			return state;
+		},
+		toggle(state: TodoItem[], payload: TodoItem) {
+			for (const item of state) {
+				if (item.todo === payload.todo) {
+					item.done = !item.done;
+				}
+			}
+			return state;
+		}
+	},
+	effects: (dispatch: any) => ({
+		async delay_delete(payload: TodoItem) {
+			await new Promise(resolve => {
+				setTimeout(() => {
+					resolve();
+				}, 1000);
+			});
+			dispatch.todo_list.delete(payload);
+		}
+	})
+});
+```
+
+:::tip
+`rematch`的`model`对象由几个基本的属性，需要大家了解。
+
+- `state`: 当前`model`状态的初始值，表示当前状态。
+- `reducer`: 用于处理同步操作，可以修改`state`,`reducer`是一个纯函数，接受当前`state`以及一个数据体(`payload`)作为参数，返回新的`state`。
+- `effects`: 用于处理异步操作和业务逻辑，返回一个 promise，入参是 dispatch，可以通过 dispatch 调用其他的 reducer 和 effects。
+  :::
+
+```tsx
+// entry/home/model/index.tsx
+/**
+ * combineReducer 生成rootReducer
+ * rootReducer: { todo_list: todo_list_reducer }
+ **/
+export * from "./todo_list";
+```
+
+创建完 model 之后就可以在组件里使用 redux 了，我们还是使用 react-redux 来连接 redux 和组件。
+创建 todo_list 组件，我们规定所有的业务组件放在`client/components`目录下。
+
+```tsx
+// client/components/todo_list.tsx
+import * as React from "react";
+import { connect } from "react-redux";
+import { models } from "entry/home/models/configure";
+import "./index.scss";
+import { RematchDispatch, RematchRootState } from "@rematch/core";
+export interface AboutProps
+	extends Partial<ReturnType<typeof mapState>>,
+		Partial<ReturnType<typeof mapDispatch>> {}
+class TodoList extends React.Component<AboutProps> {
+	state = {
+		todo: ""
+	};
+	handleToggle = (item: any) => {
+		this.props.toggle!(item);
+	};
+	handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		this.setState({
+			todo: e.target.value
+		});
+	};
+	handleDelete = (item: any) => {
+		this.props.delete_item!(item);
+	};
+	handleKeyboard = (event: React.KeyboardEvent) => {
+		if (event.keyCode !== 13) {
+			return;
+		}
+		event.preventDefault();
+		this.props.add_item!({
+			todo: this.state.todo,
+			done: false
+		} as any);
+		this.setState({
+			todo: ""
+		});
+	};
+	render() {
+		const { todo_items } = this.props;
+		const list_dom = todo_items!.map(todo_item => {
+			return (
+				<div className="todo-item" key={todo_item.todo}>
+					<input
+						type="checkbox"
+						checked={todo_item.done}
+						onChange={() => this.handleToggle(todo_item)}
+					/>
+					<span>{todo_item.todo}</span>
+					<button
+						className="delete"
+						onClick={() => this.handleDelete(todo_item)}
+					>
+						delete
+					</button>
+					<button
+						className="delay-delete"
+						onClick={() => this.props.delay_delete!(todo_item as any)}
+					>
+						delay_delete
+					</button>
+				</div>
+			);
+		});
+		return (
+			<div className="ssr-container">
+				<div className="todo-list">
+					<input
+						type="text"
+						value={this.state.todo}
+						onChange={this.handleChange}
+						onKeyDown={this.handleKeyboard}
+					/>
+					{list_dom}
+				</div>
+			</div>
+		);
+	}
+}
+
+const mapState = ({ todo_list }: RematchRootState<models>) => {
+	return {
+		todo_items: todo_list
+	};
+};
+const mapDispatch = ({ todo_list }: RematchDispatch<models>) => {
+	return {
+		add_item: todo_list.add,
+		toggle: todo_list.toggle,
+		delete_item: todo_list.delete,
+		delay_delete: todo_list.delay_delete
+	};
+};
+export default connect(
+	mapState,
+	mapDispatch as any
+)(TodoList);
+```
+
+### SPA + Redux
+
+TODO
+
+### SPA + Redux + SSR
+
+TODO
+
+### SPA + Redux + SSR + I18n
+
+TODO
