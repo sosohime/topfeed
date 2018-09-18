@@ -29,6 +29,7 @@ module.exports = {
 					collapsable: false,
 					children: [
 						"",
+						"tutorial",
 						"structure",
 						"objects",
 						"i18n",
