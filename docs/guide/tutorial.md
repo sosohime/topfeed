@@ -963,6 +963,22 @@ export default class App extends React.Component {
 
 ### React Suspense
 
+SPA + SSR 一个较为棘手的地方在于如何处理数据预取,详细指南参考[数据预取和状态](/ssr/data.md),其复杂主要在于
+
+1. 保证服务端渲染时和客户端注水时获取的状态保持一致，这可以将服务端预取到的状态同步到客户端实现（涉及到 XSS 安全问题）。
+2. 对于 SPA 用户访问一个页面分为下面两种情形：
+3. 用户直接浏览器输入地址访问当前页面，这样首先由服务端进行渲染，由服务端负责首屏数据的预取，然后客户端使用服务端同步的状态进行注水操作即可。
+4. 用户在前端从 A 页面跳转到 B 页面，此时 B 页面并不经过而是直接在前端渲染，因此需要在切换路由时，进行客户端数据的预取，而客户端的预取又分为两种情况：
+   1. 在路由导航之前完成数据的预取，使用预取数据进行渲染，这样的好处是应用代码不用处理数据获取时 loading 切换的工作，只负责数据渲染即可。
+   2. 在路由导航之后完成数据的预取，这样需要应用组件里处理数据获取时 loading 状态的切换。
+5. 由于同时涉及到客户端预取和服务端预取，如何将两种预取逻辑进行统一管理，避免同时维护两份预取逻辑（通常通过 router 提供的 matchRoute 操作和页面组件的静态方法结合实现)。
+
+由此可以看出对于单页的服务端渲染，其实现略显复杂，为了简化 SSR 的实现，React 团队提出了 Suspense，使用 Suspense 实现 SSR 可以参考[Suspense](https://github.com/acdlite/suspense-ssr-demo)
+相关的 Talk 和 issue
+
+- [React Suspense](https://github.com/facebook/react/issues/13206)
+- [React SSR Suspense](https://www.youtube.com/watch?v=z-6JC0_cOns)
+
 ### SPA + Redux + SSR
 
 ### SPA + Redux + SSR + I18n
