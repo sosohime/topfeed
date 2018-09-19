@@ -665,20 +665,305 @@ export default connect(
 
 ### SPA
 
-为了演示 SPA 的效果，我们将 news 页面拆分 feed 和 story 两个子页面，feed 页面包含了一个消息列表，而详情页(story)则包含了每条消息的详细信息。
-首先先构建两个页面。
+对于 SPA，前端和后端有着相似的分层架构，服务端和前端的分层如下图(节选自[软件分层](https://www.yuque.com/ant-design/course/abl3ad))所示：
+![layer](/topfeed/layer.png)
+上图中，左侧时服务端代码的层次结构，由 Controller,Service,Data Access 三层组成服务端系统：
+
+1. Controller 层负责与用户直接打交道，渲染页面、提供接口等，侧重于展示型逻辑。
+2. Service 层负责处理业务逻辑，供 Controller 层调用，通常是会调用 Data Access 层进行数据源操作处理。
+3. Data Access 层顾名思义，负责与数据源对接，进行纯粹的数据读写，供 Service 层调用。
+
+Node 层通常有两种使用场景，
+
+1. 完全充当服务端，其架构和上述的服务端架构完全相同。
+2. 充当中间层（topfeed 主要关注 node 充当中间层使用），这时候通常只有两层结构，即 Contoller 层和 Service 层，Controller 层作用和上述一样，Service 层则负责调用实际的后端调用(rpc 调用或者 http 调用),对应的后端分层实际上也被缩减为两层 Service 层和 Data Access 层。
+
+上图的右侧是前端代码的结构，同样需要进行必要的分层：
+
+1. Page 负责与用户直接打交道：渲染页面、接受用户的操作输入，侧重于展示型交互性逻辑。
+2. Model 负责处理业务逻辑，为 Page 做数据、状态的读写、变换、暂存等。
+3. Service 负责与 HTTP 接口对接，进行纯粹的数据读写。
+   :::tip
+   在 Node 层充当中间层和服务端渲染的场景下，Node 层和前端都有 Service 层，且其实际的工作都是负责和后端的 http 接口对接，这时候我们可以对两者的 service 层进行复用，实际上对于同构应用(Universal application)，Node 层和前端存在大量的公用逻辑(路由，数据格式化处理，数据请求等)，因此我们考虑将 client 和 server 公用的逻辑存放到 shared 目录下,最终结构是
+
+```sh
+├── server server端代码
+├── client client端代码
+├── shared server和client公用代码
+```
+
+:::
+
+### 创建 Page
+
+Hacker News 的 news 分为三个子页面，Feed 页面包含了一个文章列表，Detail 页则包含了每条文章的详细信息和对应评论,User 页包含了用户的个人信息。
+首先先构建三个页面。
 
 ```tsx
 // client/container/news/feed
+import React from "react";
+import Layout from "components/layout";
+import Article from "components/article";
+import { getTopStories } from "shared/service/news";
+export interface FeedProps {
+	path: string;
+	page: number;
+}
+export interface FeedState {
+	list: {
+		url: string;
+		title: string;
+	}[];
+}
+export default class Feed extends React.Component<FeedProps, FeedState> {
+	readonly state: FeedState = { list: [] };
+	async componentDidMount() {
+		const { page = 1 } = this.props;
+		const newsList = await getTopStories(page);
+		this.setState({
+			list: newsList
+		});
+	}
+	render() {
+		const { list } = this.state;
+		return (
+			<Layout>
+				<div className="news-view view v-trnasition" />
+				{list.map((item, idx) => (
+					<Article key={idx} item={item} index={idx} />
+				))}
+			</Layout>
+		);
+	}
+}
 ```
 
 ```tsx
-// client/container/news/story
+// client/container/news/detail
+import React from "react";
+import Layout from "components/layout";
+import Article from "components/article";
+import Comment from "components/comment";
+import { getItem } from "shared/service/news";
+import { NewsItem } from "typings";
+
+export interface DetailProps {
+	item_id?: number;
+	path: string;
+}
+export interface DetailState {
+	item: any;
+	comments: NewsItem[];
+}
+export default class Detail extends React.Component<DetailProps, DetailState> {
+	state: DetailState = {
+		item: {},
+		comments: []
+	};
+	async componentDidMount() {
+		const newsInfo = await getItem(this.props.item_id!);
+		const commentList = await Promise.all(
+			newsInfo.kids.map((_id: number) => getItem(_id))
+		);
+		console.log("news:", newsInfo);
+		this.setState({
+			item: newsInfo,
+			comments: commentList
+		});
+	}
+	render() {
+		const { item, comments } = this.state;
+		return (
+			<Layout>
+				<div className="item-view view v-transition">
+					<Article item={item} />
+					{comments.length > 0 && (
+						<ul className="comments">
+							{comments.map(comment => (
+								<Comment key={comment.id} comment={comment} />
+							))}
+						</ul>
+					)}
+					{comments.length == 0 && <p>No comments yet.</p>}
+				</div>
+			</Layout>
+		);
+	}
+}
 ```
 
-### SPA + Redux + SSR
+```tsx
+// client/contaner/news/user
+import React from "react";
+import Layout from "components/layout";
+import * as Util from "lib/util";
+import { IUser } from "typings";
+import { getUser } from "shared/service/news";
+export interface UserState {
+	user: IUser;
+}
+export default class User extends React.Component<
+	{
+		user_id: number;
+		path: string;
+	},
+	{
+		user: IUser;
+	}
+> {
+	state = {
+		user: {}
+	} as UserState;
+	async componentDidMount() {
+		const userInfo = await getUser(this.props.user_id);
+		this.setState({
+			user: userInfo
+		});
+	}
+	render() {
+		const { user } = this.state;
+		return (
+			<Layout>
+				<div className="user-view view v-transition">
+					<ul>
+						<li>
+							<span className="label">user:</span> {user.id}
+						</li>
+						<li>
+							<span className="label">created:</span>{" "}
+							{Util.relativeTime(user.created)}
+						</li>
+						<li>
+							<span className="label">karma:</span> {user.karma}
+						</li>
+						<li>
+							<span className="label">about:</span>
+							<div className="about">{user.about}</div>
+						</li>
+					</ul>
+					<p className="links">
+						<a href={`https://news.ycombinator.com/submitted?id=${user.id}`}>
+							submissions
+						</a>
+						<br />
+						<a href={`https://news.ycombinator.com/threads?id=${user.id}`}>
+							comments
+						</a>
+					</p>
+				</div>
+			</Layout>
+		);
+	}
+}
+```
 
-TODO
+### 创建 Service
+
+```tsx
+import { serverUrl } from "../constants/url";
+import http from "../lib/http";
+import { NewsItem } from "typings";
+async function request(api: string, opts?: object): Promise<any> {
+	const result = await http.get(`${serverUrl}/${api}`, opts);
+	return result;
+}
+async function getTopStories(page = 1, pageSize = 10): Promise<NewsItem[]> {
+	let idList: number[] = [];
+	try {
+		idList = await request("topstories.json", {
+			params: {
+				page,
+				pageSize
+			}
+		});
+	} catch (err) {
+		idList = [];
+	}
+	// parallel GET detail
+	const newsList = await Promise.all(
+		idList.slice(0, 10).map(id => {
+			const url = `${serverUrl}/item/${id}.json`;
+			return http.get<any, NewsItem>(url);
+		})
+	);
+	return newsList;
+}
+
+async function getItem(id: number): Promise<NewsItem> {
+	return await request(`item/${id}.json`);
+}
+
+async function getUser(id: number) {
+	return await request(`user/${id}.json`);
+}
+
+export { getTopStories, getItem, getUser };
+```
+
+### 创建 Router
+
+对于 SPA，按需加载时必不可少的，`webpack`的[dynamic import](https://webpack.js.org/guides/code-splitting/)对动态按需加载提供了很好的支持，但是我们仍然需要自己处理一些超时、请求失败等情形，所幸[react-loadable](https://github.com/jamiebuilds/react-loadable)封装了大部分的逻辑，同时对 SPA 的服务端也提供了很好的支持。下面我们就使用`react-loadable`和 `@reach/router`来定义前端路由.
+首先定义路由
+
+```tsx
+// client/entry/news/routes.tsx
+import Loadable from "react-loadable";
+import Loading from "components/loading";
+export default [
+	{
+		name: "feed",
+		path: "/news",
+		component: Loadable({
+			loader: () => import(/* webpackPrefetch: true */ "container/news/feed"), // 开启prefetch优化路由切换的加载时间
+			delay: 500,
+			loading: Loading
+		})
+	},
+	{
+		name: "detail",
+		path: "/news/item/:item_id",
+		component: Loadable({
+			loader: () => import(/* webpackPrefetch: true */ "container/news/detail"),
+			delay: 500,
+			loading: Loading
+		})
+	},
+	{
+		name: "user",
+		path: "/news/user/:user_id",
+		component: Loadable({
+			loader: () => import(/* webpackPrefetch: true */ "container/news/user"),
+			delay: 500,
+			loading: Loading
+		})
+	}
+];
+```
+
+同时我们也需要修改对应的入口文件
+
+```tsx
+import * as React from "react";
+import { Router } from "@reach/router";
+import Routers from "./routes";
+export default class App extends React.Component {
+	render() {
+		return (
+			<div className="news-container">
+				<Router>
+					{Routers.map(({ name, path, component: Component }) => {
+						return <Component key={name} path={path} />;
+					})}
+				</Router>
+			</div>
+		);
+	}
+}
+```
+
+### React Suspense
+
+### SPA + Redux + SSR
 
 ### SPA + Redux + SSR + I18n
 

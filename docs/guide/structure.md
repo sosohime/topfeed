@@ -5,6 +5,10 @@
 ```bash
 topfeed-project
 ├── README.md
+├── shared 前后端公用代码
+│   ├── service // http调用
+│   ├── constant // 公用常量
+│   ├── lib // 公用lib
 ├── client
 │   ├── assets // 静态资源
 │   │   ├── fonts // 字体，根据topfeed buildfont生成
