@@ -26,7 +26,7 @@ module.exports = {
 			"/guide/": [
 				{
 					title: "指南",
-					collapsable: false,
+					collapsable: true,
 					children: [
 						"",
 						"tutorial",
@@ -38,7 +38,8 @@ module.exports = {
 						"typescript",
 						"security",
 						"middleware",
-						"debug-and-test"
+						"debug-and-test",
+						"unit-test"
 					]
 				}
 			],
