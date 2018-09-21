@@ -28,13 +28,13 @@ topfeed-project
 │   │   ├── simple (简单页面)
 │   │   └── spa-ssr
 │   │       ├── app.tsx // 通用 entry(universal entry)
-│   │       ├── index.less // 页面相关样式
+│   │       ├── index.scss // 页面相关样式
 │   │       ├── index.tsx // client和server的入口文件(内部区分browser和server)
 │   │       ├── models // redux的model
 │   │           ├── configure.tsx redux的configstore
-│   │           ├── index.tsx 所有的model组合
-│   │           ├── detail.tsx 子页面detail对应的reducer/action/state
-│   │           └── feed.tsx   子页面feed对应的reducer/action/state
+│   │           ├── index.tsx rootReducer
+│   │           ├── detail.tsx 子页面detail对应的子reducer
+│   │           └── feed.tsx   子页面feed对应的子reducer
 │   │       └── routes.tsx // 单页路由
 │   ├── lib (公用的库)
 │   ├── models （所有页面公用的reducer)
@@ -46,7 +46,7 @@ topfeed-project
 │   ├── scripts (前端使用的脚本)
 │   │   └── get_entry.js （获取webpack入口脚本)
 │   ├── style (所有页面公用的主题样式)
-│   │   ├── common.less
+│   │   ├── common.scss
 │   │   └── theme
 │   ├── tsconfig.json
 │   ├── typings (前端的业务相关ts定义)
@@ -63,6 +63,10 @@ topfeed-project
 │   │   └── studioController.ts
 │   ├── lib （node 公共lib)
 │   ├── locales (i18n的所有语言)
+│   │   ├── langs
+│           ├── en.json // 英语文案
+│           ├── zh.json // 中文文案
+│   │   ├── index.ts
 │   ├── middleware (公共中间件)
 │   ├── public
 │   │   ├── browser // webpack target=browser生成的代码

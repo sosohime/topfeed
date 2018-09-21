@@ -200,8 +200,8 @@ export { list };
 
 // server/router/index.ts
 import { Application } from "@topfeed/topfeed";
-import * as homeController from "../controller/homeController";
-import * as newsController from "../controller/newsController";
+import * as homeController from "controller/homeController";
+import * as newsController from "controller/newsController";
 
 export default (app: Application) => {
 	const router = app.router;
@@ -292,7 +292,8 @@ ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 ```css
-<!-- client/entry/home/index.scss -- > body {
+// client/entry/home/index.scss
+body {
 	background: antiquewhite;
 }
 ```
@@ -464,10 +465,10 @@ export { main };
 ### Model
 
 对于稍微上规模的代码，状态管理是不可或缺的，`Redux` 是一个很好的状态管理库，但是其使用方式稍显冗杂，因此我们使用了[Rematch](https://github.com/rematch/rematch)作为状态管理库，其兼容了 `Redux` 的使用方式的同时，大大简化了 `Redux` 的使用，同时对 `Typescript` 的支持也比较好。下面我们使用 `rematch` 来实现一个简化的 `TodoList`。
-首先安装 rematch:
+首先安装 `rematch`:
 
 ```sh
-npm i @rematch/core@next # 我们使用了next的某些特性，此处需要加入@next
+npm i @rematch/core@next # 我们使用了next的某些新特性，此处需要加入@next
 ```
 
 创建 model，我们将 model 存放在 entry 里，里面包含三类文件
@@ -492,7 +493,7 @@ export default function configure() {
 ```
 
 :::tip Immutable
-因为 redux 要求 reducer 是个纯函数，这意味着我们不能修改原来的对象，而是生成原有对象的深度拷贝，手动实现深度拷贝是很烦人的(代码里充斥着...的解构操作,代码可读性也变得很差)，因此我们考虑使用 immer 来实现 Immutable，这样大大简化了状态的更新操作。
+因为 `redux` 要求 reducer 是个纯函数，这意味着我们不能修改原来的对象，而是生成原有对象的深度拷贝，手动实现深度拷贝是很烦人的(代码里充斥着...的解构操作,代码可读性也变得很差)，因此我们考虑使用 `immer` 来实现 `Immutable`，这样大大简化了状态的更新操作。
 :::
 
 ```tsx
@@ -970,7 +971,7 @@ export default class App extends React.Component {
 }
 ```
 
-由于使用了按需加载，为了避免加载所需组件代码时的 loading 闪烁，我们可以预先加载所需组件 react-loadble 通过 Loadable.preloadReady 可以实现组件的 preload。故修改加载入口如下:
+由于使用了按需加载，为了避免加载所需组件代码时的 loading 闪烁，我们可以预先加载所需组件 react-loadble 通过 `Loadable.preloadReady` 可以实现组件的 preload。故修改加载入口如下:
 
 ```tsx
 import App from "./app";
@@ -993,7 +994,7 @@ const clientRender = () => {
 export default clientRender();
 ```
 
-## SPA + SSR
+## SPA + SSR + Code Splitting
 
 上面的 SPA 各个页面获取首屏数据的逻辑都是存放在各页面组件的`componentDidMount`中进行的，我们能够感受到明显的页面闪烁问题，下面考虑对 SPA 实现 SSR。
 :::tip React Suspense
@@ -1014,6 +1015,8 @@ SPA + SSR 一个较为棘手的地方在于如何处理数据预取,详细指南
 - [React Suspense](https://github.com/facebook/react/issues/13206)
 - [React SSR Suspense](https://www.youtube.com/watch?v=z-6JC0_cOns)
   :::
+
+### Redux 集成
 
 对于 SPA 的 SSR 我们配合 Redux 进行实现。
 首先定义相关 models。
@@ -1401,4 +1404,15 @@ const serverRender = (props: ContextProps) => {
 export default (__BROWSER__ ? clientRender() : serverRender);
 
 export { routes, configureStore };
+```
+
+最后因为我们对页面进行了按需加载，所以服务端启动前应该预先下载所有页面组件模块，以防止首次访问页面时，服务端渲染 loading 的页面，故在入口处需要使用`react-loadable`的`preloadAll`方法，进行服务端预加载按需加载的模块。
+
+```tsx
+export async function startServer() {
+	await Loadable.preloadAll(); // 服务端预加载按需加载模块
+	app.listen(process.env.PORT, () => {
+		console.log("start server at port:", process.env.PORT);
+	});
+}
 ```
