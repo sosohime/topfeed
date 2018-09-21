@@ -1361,3 +1361,44 @@ export default withRouter<any>(
 	)(App)
 );
 ```
+
+最终我们修改客户端和服务端公用的入口代码即可。
+
+```tsx
+// client/entry/news/index.tsx
+import App from "./app";
+import ReactDOM from "react-dom";
+import React from "react";
+import Loadable from "react-loadable";
+import configureStore from "./models/configure";
+import { Provider } from "react-redux";
+import { ContextProps } from "typings";
+import routes from "./routes";
+import { BrowserRouter, StaticRouter } from "react-router-dom";
+const clientRender = () => {
+	const store = configureStore(window.__INITIAL_STATE__);
+	Loadable.preloadReady().then(() => {
+		ReactDOM.hydrate(
+			<Provider store={store}>
+				<BrowserRouter>
+					<App />
+				</BrowserRouter>
+			</Provider>,
+			document.getElementById("root")
+		);
+	});
+};
+
+const serverRender = (props: ContextProps) => {
+	return (
+		<Provider store={props.store}>
+			<StaticRouter location={props.url} context={props.context}>
+				<App />
+			</StaticRouter>
+		</Provider>
+	);
+};
+export default (__BROWSER__ ? clientRender() : serverRender);
+
+export { routes, configureStore };
+```
