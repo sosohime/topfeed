@@ -51,7 +51,7 @@ $ topfeed i18n download
 TODO
 自动创建页面(单页|SSR|单页 SSR)/组件级别代码
 
-# setting
+# mock
 
 TODO
-自动生成 SCM&&TCE 等配置 (for 头条用户)
+接入 mock 服务

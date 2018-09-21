@@ -38,8 +38,9 @@ module.exports = {
 						"typescript",
 						"security",
 						"middleware",
-						"debug-and-test",
-						"unit-test"
+						"debug",
+						"test",
+						"mock"
 					]
 				}
 			],
